@@ -39,8 +39,8 @@ class team_scraper:
 
         # only scrape if it does not already exist:
 
-        if f'{self.time}.p' in os.listdir(self.dir):
-            self.teams = pd.read_pickle(f'{self.dir}{self.time}.p')
+        if f'{self.time}.csv' in os.listdir(self.dir):
+            self.teams = pd.read_csv(f'{self.dir}{self.time}.csv')
         
 
         else:
@@ -79,4 +79,4 @@ class team_scraper:
         return self.teams[:n]
 
     def write_teams(self):
-        self.teams.to_pickle(f"{self.dir}{self.time}.p")
+        self.teams.to_csv(f"{self.dir}{self.time}.csv", index= False)
