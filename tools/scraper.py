@@ -56,7 +56,6 @@ class team_scraper:
         for i,team in enumerate(self.team_data):
             matches = re.findall(pattern, team)
             for match in matches:
-                # self.teams.append([match[0], int(match[1])])
                 self.teams.loc[i] = [match[0] , int(match[1])]
     
     def get_teams(self):
@@ -65,7 +64,3 @@ class team_scraper:
     def write_teams(self):
         time = datetime.today().strftime('%Y-%m-%d')
         self.teams.to_pickle(f"../data/teams/team_ranking_{time}.p")
-
-ts = team_scraper()
-
-print(ts.get_teams())
