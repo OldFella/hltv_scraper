@@ -1,0 +1,5 @@
+mariadb
+numpy
+selenium
+pandas
+ipykernel
