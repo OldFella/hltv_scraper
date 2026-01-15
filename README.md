@@ -3,12 +3,12 @@
 Small project to extract data from the hltv.org website to help building better fantasy teams.
 
 ## Challenges:
-    - hltv uses JS to display the websites
-        => Using Selenium to interact with the website
-        => Bottleneck in opening URLs
+  - hltv uses JS to display the websites  
+      => Using Selenium to interact with the website  
+      => Bottleneck in opening URLs  
         
-    - hltv uses cloudflare
-        => Avoiding Captcha checks
+  - hltv uses cloudflare  
+    => Avoiding Captcha checks
 
 ## TODO:
   - Scraper for VRS Ranking ✅
