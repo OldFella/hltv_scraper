@@ -77,7 +77,7 @@ class result_scraper:
 
     def write_rankings(self):
         self.results = pd.concat([self.results, self.results_table])
-        self.results.to_csv(f"{self.dir}matches.csv", index= False, header = False)
+        self.results.to_csv(f"{self.dir}matches.csv", index= False)
 
     def get_results_data(self):
         return self.results_data
