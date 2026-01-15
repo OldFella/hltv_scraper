@@ -25,9 +25,7 @@ class result_scraper:
         self.results_data = []
 
         self.results_table = pd.read_csv(f"{self.dir}matches.csv", names=['match_id', 'team1', 'score1', 'team2','score2','event' ,'link'])
-        print(self.results_table)
         self.results = pd.DataFrame(columns=['match_id', 'team1', 'score1', 'team2','score2','event' ,'link'])
-        # self.results = pd.concat([self.results, self.results_table])
 
         proxy = "20.235.159.154:80"
         self.options = Options()
