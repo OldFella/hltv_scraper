@@ -24,7 +24,8 @@ class result_scraper:
         self.teams = []
         self.results_data = []
 
-        self.results_table = pd.read_csv(f"{self.dir}matches.csv", names=['match_id', 'team1', 'score1', 'team2','score2','event' ,'link'])
+        self.results_table = pd.read_csv(f"{self.dir}matches.csv",
+                                         names=['match_id', 'team1', 'score1', 'team2','score2','event' ,'link'])
         self.results = pd.DataFrame(columns=['match_id', 'team1', 'score1', 'team2','score2','event' ,'link'])
 
         proxy = "20.235.159.154:80"
@@ -155,3 +156,130 @@ class team_scraper:
 
     def write_teams(self):
         self.teams.to_csv(f"{self.dir}{self.time}.csv", index= False)
+
+
+
+class match_scraper:
+    def __init__(self):
+        self.options = Options()
+        self.options.add_argument("--headless")
+        self.match_src_path = "data/match_src/"
+        self.player_stats = pd.DataFrame(columns=['matchID', 'playerID','team',
+                                                  'map', 'side', 'k','d','ek',
+                                                  'ed','roundSwing', 'adr', 'eadr',
+                                                  'kast','ekast','rating'])
+        
+        self.players = pd.DataFrame(columns=['playerID', 'name'])
+        self.match = pd.DataFrame(columns=['matchID', 'date','team1', 'score1', 'team2','score2'])
+
+    def open_match(self, url):
+        pattern_match_id = r'matches/([^"]*)/'
+        match_id = re.findall(pattern_match_id,url)
+        driver = webdriver.Firefox(options=self.options)
+        driver.get(url)
+        dates = driver.find_elements(By.CLASS_NAME, 'date')
+        date = dates[1].text
+        table_names = driver.find_elements(By.CLASS_NAME,'stats-menu-link')
+        maps = []
+        for e in table_names:
+            maps.append(e.get_attribute('innerHTML'))
+        table = driver.find_elements(By.CLASS_NAME,'stats-content')
+        scores = []
+        for e in table:
+            scores.append(e.get_attribute("innerHTML"))
+        
+        driver.quit()        
+        return zip(match_id * len(maps), [date] * len(maps),maps, scores)
+
+    def get_stats(self,data):
+
+        for match_id,date,maps, players in data:
+            # print(maps)
+            d = self.get_date(date)
+
+            m = self.get_maps(maps)
+            stats = self.get_player_stats(players)
+            stats['date'] = d
+            stats['map'] = m
+            stats['matchID'] = match_id
+            self.player_stats = pd.concat([self.player_stats, stats])
+    
+    def get_date(self, date):
+        date = re.sub(r'(\d+)(st|nd|rd|th) of', r'\1', date)
+        date = datetime.strptime(date, "%d %B %Y")
+        return date.strftime("%Y-%m-%d")
+    
+    def get_maps(self, maps):
+        pattern = r'id="[^"]*">([^"]*)</'
+        map_match = re.findall(pattern, maps)
+        return map_match[0]
+    
+    def get_player_stats(self,players):
+
+        player_stats = pd.DataFrame(columns=['playerID', 'side','team', 'k','d','ek',
+                                                  'ed','roundSwing', 'adr', 'eadr',
+                                                  'kast','ekast','rating'])
+        
+        player_count = {}
+            
+        counts = {1:'total',
+                2:'ct',
+                3:'t'}
+        teams = players.split('class="teamName')
+        for team in teams:
+    
+            team_patterns = r'team">([^"]*)</a>'
+            team_name = re.findall(team_patterns, team)
+
+            players = team.split('<td class="players">')
+            
+
+            for player in players:
+                start = player.find("/player/")
+                if start == -1:
+                    continue
+                end = start + player[start:].find('"')
+                _,_,p_id, name = player[start:end].split('/')
+
+                player_info = pd.DataFrame({'playerID':[p_id], 'name':[name]})
+                self.players = pd.concat([self.players, player_info])
+                self.players = self.players.drop_duplicates()
+
+                p_id = int(p_id)
+                if p_id not in player_count.keys():
+                    player_count[p_id] = 1
+
+                pattern = r'class="([^"]*((kd|adr|roundSwing|kast|rating)[^"]*(traditional-data|eco-adjusted-data|text-center)[^"]*)[^"]*)">([+-]?[\d\.\-%]+)</td>'
+                matches = re.findall(pattern, player)
+                stats = {}
+                for match in matches:
+
+                    classes = match[2]
+                    value = match[4]
+                    value = value.replace('%','')
+
+                    if 'eco' in match[3]:
+                        classes = 'e'+classes
+                        
+                    if "kd" in classes and "eco" in match[3]:
+                        k,d = value.split('-')
+                        stats['ek'] = [float(k)]
+                        stats['ed'] = [float(d)]
+
+                    elif "kd" in classes and "eco" not in match[3]:
+                        k,d = value.split('-')
+                        stats['k'] = [float(k)]
+                        stats['d'] = [float(d)]
+                    else:
+                        stats[classes] = [float(value)]
+
+
+                stats['playerID'] = [p_id]
+                stats['side'] = [counts[player_count[p_id]]]
+                stats['team'] = team_name
+                stat = pd.DataFrame(stats)
+                player_count[p_id] += 1
+
+                player_stats = pd.concat([player_stats, stat])
+        
+        return player_stats
