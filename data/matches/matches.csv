@@ -1,60 +1,39 @@
-match_id,team1,score1,team2,score2,event,link
+matchID,team1,score1,team2,score2,event,url
+2389261,9INE,0,FURIA,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389261/9ine-vs-furia-blast-bounty-2026-season-1
+2389251,BetBoom,0,paiN,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389251/betboom-vs-pain-blast-bounty-2026-season-1
+2389265,SINNERS,0,Spirit,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389265/sinners-vs-spirit-blast-bounty-2026-season-1
+2389262,ENCE,0,PARIVISION,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389262/ence-vs-parivision-blast-bounty-2026-season-1
 2389266,ECSTATIC,0,Falcons,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389266/ecstatic-vs-falcons-blast-bounty-2026-season-1
 2389256,Ninjas in Pyjamas,1,Liquid,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389256/ninjas-in-pyjamas-vs-liquid-blast-bounty-2026-season-1
-2389259,Inner Circle,2,3DMAX,1,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389259/inner-circle-vs-3dmax-blast-bounty-2026-season-1
-2389253,M80,0,Gentle Mates,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389253/m80-vs-gentle-mates-blast-bounty-2026-season-1
-2389263,Virtus.pro,0,Vitality,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389263/virtuspro-vs-vitality-blast-bounty-2026-season-1
-2389264,Monte,2,Natus Vincere,1,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389264/monte-vs-natus-vincere-blast-bounty-2026-season-1
-2389257,Friendly Campers,0,HEROIC,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389257/friendly-campers-vs-heroic-blast-bounty-2026-season-1
-2389254,Passion UA,1,GamerLegion,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389254/passion-ua-vs-gamerlegion-blast-bounty-2026-season-1
+2389300,HyperSpirit,1,BIG,2,Roman Imperium Cup IV,https://www.hltv.org/matches/2389300/hyperspirit-vs-big-roman-imperium-cup-iv
+2389086,Petardka,0,illwill,2,CCT Season 3 Europe Series 13 Closed Qualifier,https://www.hltv.org/matches/2389086/petardka-vs-illwill-cct-season-3-europe-series-13-closed-qualifier
+2389380,Fake do Biru,0,MIBR,2,BetBoom RUSH B Summit Season 1,https://www.hltv.org/matches/2389380/fake-do-biru-vs-mibr-betboom-rush-b-summit-season-1
+2389414,Johnny Speeds,13,AaB,6,PLAYR Masters Season 1,https://www.hltv.org/matches/2389414/johnny-speeds-vs-aab-playr-masters-season-1
+2389399,Sashi,13,SemperFi,3,PLAYR Masters Season 1,https://www.hltv.org/matches/2389399/sashi-vs-semperfi-playr-masters-season-1
+2389261,9INE,0,FURIA,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389261/9ine-vs-furia-blast-bounty-2026-season-1
+2389411,Johnny Speeds,11,STATE,13,PLAYR Masters Season 1,https://www.hltv.org/matches/2389411/johnny-speeds-vs-state-playr-masters-season-1
+2389085,MINLATE,1,ARCRED,2,CCT Season 3 Europe Series 13 Closed Qualifier,https://www.hltv.org/matches/2389085/minlate-vs-arcred-cct-season-3-europe-series-13-closed-qualifier
+2389396,Sashi,9,Tricked,13,PLAYR Masters Season 1,https://www.hltv.org/matches/2389396/sashi-vs-tricked-playr-masters-season-1
+2389297,BIG,13,EXSAD,3,Roman Imperium Cup IV,https://www.hltv.org/matches/2389297/big-vs-exsad-roman-imperium-cup-iv
+2389408,Johnny Speeds,9,aimclub,13,PLAYR Masters Season 1,https://www.hltv.org/matches/2389408/johnny-speeds-vs-aimclub-playr-masters-season-1
+2389251,BetBoom,0,paiN,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389251/betboom-vs-pain-blast-bounty-2026-season-1
+2389296,Rebels,2,SAW,0,Roman Imperium Cup IV,https://www.hltv.org/matches/2389296/rebels-vs-saw-roman-imperium-cup-iv
+2389393,Sashi,13,HEROIC Academy,4,PLAYR Masters Season 1,https://www.hltv.org/matches/2389393/sashi-vs-heroic-academy-playr-masters-season-1
+2389265,SINNERS,0,Spirit,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389265/sinners-vs-spirit-blast-bounty-2026-season-1
+2389405,Johnny Speeds,13,INFINITE,8,PLAYR Masters Season 1,https://www.hltv.org/matches/2389405/johnny-speeds-vs-infinite-playr-masters-season-1
+2389295,MINLATE,2,SAW,1,Roman Imperium Cup IV,https://www.hltv.org/matches/2389295/minlate-vs-saw-roman-imperium-cup-iv
+2389390,Sashi,13,megoshort,10,PLAYR Masters Season 1,https://www.hltv.org/matches/2389390/sashi-vs-megoshort-playr-masters-season-1
+2389402,Johnny Speeds,22,Prestige,19,PLAYR Masters Season 1,https://www.hltv.org/matches/2389402/johnny-speeds-vs-prestige-playr-masters-season-1
+2389262,ENCE,0,PARIVISION,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389262/ence-vs-parivision-blast-bounty-2026-season-1
+2389387,Sashi,13,Hemmaplan,0,PLAYR Masters Season 1,https://www.hltv.org/matches/2389387/sashi-vs-hemmaplan-playr-masters-season-1
+2389083,Acend,1,Bebop,2,CCT Season 3 Europe Series 13 Closed Qualifier,https://www.hltv.org/matches/2389083/acend-vs-bebop-cct-season-3-europe-series-13-closed-qualifier
+2389293,Rebels,10,SAW,13,Roman Imperium Cup IV,https://www.hltv.org/matches/2389293/rebels-vs-saw-roman-imperium-cup-iv
+2389379,MIBR,0,Legacy,2,BetBoom RUSH B Summit Season 1,https://www.hltv.org/matches/2389379/mibr-vs-legacy-betboom-rush-b-summit-season-1
+2389378,Imperial,0,Sharks,2,BetBoom RUSH B Summit Season 1,https://www.hltv.org/matches/2389378/imperial-vs-sharks-betboom-rush-b-summit-season-1
 2389266,ECSTATIC,0,Falcons,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389266/ecstatic-vs-falcons-blast-bounty-2026-season-1
 2389377,Gaimin Gladiators,2,GameHunters,0,BetBoom RUSH B Summit Season 1,https://www.hltv.org/matches/2389377/gaimin-gladiators-vs-gamehunters-betboom-rush-b-summit-season-1
 2389082,UNiTY,2,illwill,0,CCT Season 3 Europe Series 13 Closed Qualifier,https://www.hltv.org/matches/2389082/unity-vs-illwill-cct-season-3-europe-series-13-closed-qualifier
 2389256,Ninjas in Pyjamas,1,Liquid,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389256/ninjas-in-pyjamas-vs-liquid-blast-bounty-2026-season-1
-2389376,Fake do Biru,2,Keyd Stars,0,BetBoom RUSH B Summit Season 1,https://www.hltv.org/matches/2389376/fake-do-biru-vs-keyd-stars-betboom-rush-b-summit-season-1
-2389081,FORZE Reload,2,ARCRED,0,CCT Season 3 Europe Series 13 Closed Qualifier,https://www.hltv.org/matches/2389081/forze-reload-vs-arcred-cct-season-3-europe-series-13-closed-qualifier
-2389259,Inner Circle,2,3DMAX,1,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389259/inner-circle-vs-3dmax-blast-bounty-2026-season-1
-2389285,MOUZ NXT,2,Impulse GW,1,Roman Imperium Cup IV,https://www.hltv.org/matches/2389285/mouz-nxt-vs-impulse-gw-roman-imperium-cup-iv
-2389253,M80,0,Gentle Mates,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389253/m80-vs-gentle-mates-blast-bounty-2026-season-1
-2389283,MOUZ NXT,13,GRINGOS,1,Roman Imperium Cup IV,https://www.hltv.org/matches/2389283/mouz-nxt-vs-gringos-roman-imperium-cup-iv
-2389375,Legacy,2,GameHunters,0,BetBoom RUSH B Summit Season 1,https://www.hltv.org/matches/2389375/legacy-vs-gamehunters-betboom-rush-b-summit-season-1
-2389374,Sharks,2,Keyd Stars,0,BetBoom RUSH B Summit Season 1,https://www.hltv.org/matches/2389374/sharks-vs-keyd-stars-betboom-rush-b-summit-season-1
-2389373,Imperial,2,Fake do Biru,0,BetBoom RUSH B Summit Season 1,https://www.hltv.org/matches/2389373/imperial-vs-fake-do-biru-betboom-rush-b-summit-season-1
-2389078,BASEMENT BOYS,1,illwill,2,CCT Season 3 Europe Series 13 Closed Qualifier,https://www.hltv.org/matches/2389078/basement-boys-vs-illwill-cct-season-3-europe-series-13-closed-qualifier
-2389263,Virtus.pro,0,Vitality,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389263/virtuspro-vs-vitality-blast-bounty-2026-season-1
-2389264,Monte,2,Natus Vincere,1,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389264/monte-vs-natus-vincere-blast-bounty-2026-season-1
-2389372,MIBR,2,Gaimin Gladiators,0,BetBoom RUSH B Summit Season 1,https://www.hltv.org/matches/2389372/mibr-vs-gaimin-gladiators-betboom-rush-b-summit-season-1
-2389257,Friendly Campers,0,HEROIC,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389257/friendly-campers-vs-heroic-blast-bounty-2026-season-1
-2389076,ARCRED,2,MINLATE,0,CCT Season 3 Europe Series 13 Closed Qualifier,https://www.hltv.org/matches/2389076/arcred-vs-minlate-cct-season-3-europe-series-13-closed-qualifier
-2389254,Passion UA,1,GamerLegion,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389254/passion-ua-vs-gamerlegion-blast-bounty-2026-season-1
-2389255,HOTU,1,Aurora,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389255/hotu-vs-aurora-blast-bounty-2026-season-1
-2389252,fnatic,1,Astralis,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389252/fnatic-vs-astralis-blast-bounty-2026-season-1
-2389242,ARCRED,2,BASEMENT BOYS,1,NODWIN Clutch Series 4 Closed Qualifier,https://www.hltv.org/matches/2389242/arcred-vs-basement-boys-nodwin-clutch-series-4-closed-qualifier
-2389258,EYEBALLERS,2,FaZe,1,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389258/eyeballers-vs-faze-blast-bounty-2026-season-1
-2389241,illwill,2,MASONIC,0,NODWIN Clutch Series 4 Closed Qualifier,https://www.hltv.org/matches/2389241/illwill-vs-masonic-nodwin-clutch-series-4-closed-qualifier
-2389260,OG,0,FUT,2,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389260/og-vs-fut-blast-bounty-2026-season-1
-2389071,Acend,2,Bushido Wildcats,1,CCT Season 3 Europe Series 13 Closed Qualifier,https://www.hltv.org/matches/2389071/acend-vs-bushido-wildcats-cct-season-3-europe-series-13-closed-qualifier
-2389092,ARCRED,2,The Glecs,0,NODWIN Clutch Series 4 Closed Qualifier,https://www.hltv.org/matches/2389092/arcred-vs-the-glecs-nodwin-clutch-series-4-closed-qualifier
-2389067,Acend,1,Ursa,2,CCT Season 3 Europe Series 13 Closed Qualifier,https://www.hltv.org/matches/2389067/acend-vs-ursa-cct-season-3-europe-series-13-closed-qualifier
-2389091,illwill,1,Universe,0,NODWIN Clutch Series 4 Closed Qualifier,https://www.hltv.org/matches/2389091/illwill-vs-universe-nodwin-clutch-series-4-closed-qualifier
-2388998,M80,2,NRG,0,fl0m Mythical LAN Las Vegas 2026,https://www.hltv.org/matches/2388998/m80-vs-nrg-fl0m-mythical-lan-las-vegas-2026
-2388997,NRG,2,Marsborne,1,fl0m Mythical LAN Las Vegas 2026,https://www.hltv.org/matches/2388997/nrg-vs-marsborne-fl0m-mythical-lan-las-vegas-2026
-2388996,M80,2,Voca,0,fl0m Mythical LAN Las Vegas 2026,https://www.hltv.org/matches/2388996/m80-vs-voca-fl0m-mythical-lan-las-vegas-2026
-2389065,Fingers Crossed,2,777,0,A1 Gaming League Season 11,https://www.hltv.org/matches/2389065/fingers-crossed-vs-777-a1-gaming-league-season-11
-2389064,Acend,2,Washington,0,A1 Gaming League Season 11,https://www.hltv.org/matches/2389064/acend-vs-washington-a1-gaming-league-season-11
-2388995,BOSS,0,Marsborne,2,fl0m Mythical LAN Las Vegas 2026,https://www.hltv.org/matches/2388995/boss-vs-marsborne-fl0m-mythical-lan-las-vegas-2026
-2388994,Voca,2,Rave,1,fl0m Mythical LAN Las Vegas 2026,https://www.hltv.org/matches/2388994/voca-vs-rave-fl0m-mythical-lan-las-vegas-2026
-2388993,regain,0,Marsborne,2,fl0m Mythical LAN Las Vegas 2026,https://www.hltv.org/matches/2388993/regain-vs-marsborne-fl0m-mythical-lan-las-vegas-2026
-2388992,M80,2,BOSS,0,fl0m Mythical LAN Las Vegas 2026,https://www.hltv.org/matches/2388992/m80-vs-boss-fl0m-mythical-lan-las-vegas-2026
-2388991,Phoenix,1,Rave,2,fl0m Mythical LAN Las Vegas 2026,https://www.hltv.org/matches/2388991/phoenix-vs-rave-fl0m-mythical-lan-las-vegas-2026
-2388990,NRG,2,Voca,0,fl0m Mythical LAN Las Vegas 2026,https://www.hltv.org/matches/2388990/nrg-vs-voca-fl0m-mythical-lan-las-vegas-2026
-2389062,Phantom,0,HyperSpirit,2,A1 Gaming League Season 11,https://www.hltv.org/matches/2389062/phantom-vs-hyperspirit-a1-gaming-league-season-11
-2389061,GenOne,2,CSDIILIT,0,A1 Gaming League Season 11,https://www.hltv.org/matches/2389061/genone-vs-csdiilit-a1-gaming-league-season-11
-2388988,Marsborne,1,BOSS,2,fl0m Mythical LAN Las Vegas 2026,https://www.hltv.org/matches/2388988/marsborne-vs-boss-fl0m-mythical-lan-las-vegas-2026
-2388989,M80,2,regain,0,fl0m Mythical LAN Las Vegas 2026,https://www.hltv.org/matches/2388989/m80-vs-regain-fl0m-mythical-lan-las-vegas-2026
-2388986,Voca,2,Rave,1,fl0m Mythical LAN Las Vegas 2026,https://www.hltv.org/matches/2388986/voca-vs-rave-fl0m-mythical-lan-las-vegas-2026
-2388987,NRG,2,Phoenix,1,fl0m Mythical LAN Las Vegas 2026,https://www.hltv.org/matches/2388987/nrg-vs-phoenix-fl0m-mythical-lan-las-vegas-2026
-match_id,team1,score1,team2,score2,event,link
 2389376,Fake do Biru,2,Keyd Stars,0,BetBoom RUSH B Summit Season 1,https://www.hltv.org/matches/2389376/fake-do-biru-vs-keyd-stars-betboom-rush-b-summit-season-1
 2389081,FORZE Reload,2,ARCRED,0,CCT Season 3 Europe Series 13 Closed Qualifier,https://www.hltv.org/matches/2389081/forze-reload-vs-arcred-cct-season-3-europe-series-13-closed-qualifier
 2389259,Inner Circle,2,3DMAX,1,BLAST Bounty 2026 Season 1,https://www.hltv.org/matches/2389259/inner-circle-vs-3dmax-blast-bounty-2026-season-1

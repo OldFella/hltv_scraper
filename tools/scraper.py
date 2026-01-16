@@ -25,8 +25,8 @@ class result_scraper:
         self.results_data = []
 
         self.results_table = pd.read_csv(f"{self.dir}matches.csv",
-                                         names=['match_id', 'team1', 'score1', 'team2','score2','event' ,'link'])
-        self.results = pd.DataFrame(columns=['match_id', 'team1', 'score1', 'team2','score2','event' ,'link'])
+                                         names=['matchID', 'team1', 'score1', 'team2','score2','event' ,'url'])
+        self.results = pd.DataFrame(columns=['matchID', 'team1', 'score1', 'team2','score2','event' ,'url'])
 
         proxy = "20.235.159.154:80"
         self.options = Options()
@@ -68,7 +68,7 @@ class result_scraper:
             teams = pd.unique(np.array(teams)).tolist()
             score = re.findall(pattern_score, data)
             match_id = int(re.findall(pattern_id, link)[0])
-            if match_id in self.results_table['match_id'].to_list():
+            if match_id in self.results_table['matchID'].to_list():
                 continue
             self.results.loc[i] = [match_id, teams[0], int(score[0][1]), teams[1], int(score[0][3]), teams[2], link]
     
@@ -170,15 +170,25 @@ class match_scraper:
                                                   'kast','ekast','rating'])
         
         self.players = pd.DataFrame(columns=['playerID', 'name'])
-        self.match = pd.DataFrame(columns=['matchID', 'date','team1', 'score1', 'team2','score2'])
+        self.match = pd.DataFrame(columns=['matchID', 'map','side','date','team', 'score'])
 
-    def open_match(self, url):
+    def open_match(self, row):
+        url = row['url']
+
         pattern_match_id = r'matches/([^"]*)/'
         match_id = re.findall(pattern_match_id,url)
         driver = webdriver.Firefox(options=self.options)
         driver.get(url)
         dates = driver.find_elements(By.CLASS_NAME, 'date')
         date = dates[1].text
+        map_rounds = driver.find_elements(By.CLASS_NAME, 'results-center-half-score')
+        rounds_won = [f'({row["score1"]}:{row["score2"]})']
+        to_replace = ['<','/','>', 'span', 'class=', '"'," "]
+        for e in map_rounds:
+            text = e.get_attribute('innerHTML')
+            for r in to_replace:
+                text = text.replace(r,"")
+            rounds_won.append(text)
         table_names = driver.find_elements(By.CLASS_NAME,'stats-menu-link')
         maps = []
         for e in table_names:
@@ -189,20 +199,55 @@ class match_scraper:
             scores.append(e.get_attribute("innerHTML"))
         
         driver.quit()        
-        return zip(match_id * len(maps), [date] * len(maps),maps, scores)
+        return zip(match_id * len(maps), [date] * len(maps),maps, scores, rounds_won)
 
-    def get_stats(self,data):
+    def get_stats(self,data,row):
 
-        for match_id,date,maps, players in data:
+        for match_id,date,maps, players,rounds_won in data:
             # print(maps)
             d = self.get_date(date)
 
             m = self.get_maps(maps)
             stats = self.get_player_stats(players)
-            stats['date'] = d
+            # stats['date'] = d
             stats['map'] = m
             stats['matchID'] = match_id
-            self.player_stats = pd.concat([self.player_stats, stats])
+            if self.player_stats.empty:
+                self.player_stats = stats
+            else:
+                self.player_stats = pd.concat([self.player_stats, stats])
+            if m == 'All':
+                for team,score in [(row['team1'],row['score1']), (row['team2'],row['score2'])]:
+                    match = [match_id, m,'total',d,team, score]
+                    self.match.loc[len(self.match)] = match
+            else:
+                pattern = r'(ct|t)(\d+):(ct|t)(\d+)'
+                reg_ot= rounds_won.split(')(')
+                total_teams = [0,0]
+                for s in reg_ot:
+                    round_score = re.findall(pattern, s)
+                    if round_score != []:
+                        for side in round_score:
+                            match = [match_id, m,side[0],d,row['team1'], int(side[1])]
+                            self.match.loc[len(self.match)] = match
+                            total_teams[0] += int(side[1])
+
+                            match = [match_id, m,side[2],d,row['team2'], (side[3])]
+                            self.match.loc[len(self.match)] = match
+                            total_teams[1] += int(side[3])
+                    else:
+                        pattern = r'(\d+):(\d+)'
+                        round_score = re.findall(pattern, s)
+                        for i,side in enumerate(round_score[0]):
+                            total_teams[i] += int(side)
+                
+                match = [match_id, m,'total',d,row['team1'], total_teams[0]]
+                self.match.loc[len(self.match)] = match
+
+                match = [match_id, m,'total',d,row['team2'], total_teams[1]]
+                self.match.loc[len(self.match)] = match
+
+
     
     def get_date(self, date):
         date = re.sub(r'(\d+)(st|nd|rd|th) of', r'\1', date)
@@ -279,7 +324,9 @@ class match_scraper:
                 stats['team'] = team_name
                 stat = pd.DataFrame(stats)
                 player_count[p_id] += 1
-
-                player_stats = pd.concat([player_stats, stat])
+                if player_stats.empty:
+                    player_stats = stat
+                else:
+                    player_stats = pd.concat([player_stats, stat])
         
         return player_stats
