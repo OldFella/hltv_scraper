@@ -1,0 +1,43 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64; rv:142.0) Gecko/20100101 Firefox/142.0" version="29.3.1">
+  <diagram name="ER Diagram" id="GLVx6CTzIqXLArrFmko7">
+    <mxGraphModel dx="872" dy="1588" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="rogMhIze_BVC0yehM4i2-14" edge="1" parent="1" source="rogMhIze_BVC0yehM4i2-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" target="rogMhIze_BVC0yehM4i2-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rogMhIze_BVC0yehM4i2-2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;" value="PLAYERS&#xa;──────────&#xa;playerID (PK)&#xa;name" vertex="1">
+          <mxGeometry height="100" width="220" x="30" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="rogMhIze_BVC0yehM4i2-16" edge="1" parent="1" source="rogMhIze_BVC0yehM4i2-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="rogMhIze_BVC0yehM4i2-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rogMhIze_BVC0yehM4i2-3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;" value="TEAMS&#xa;──────────&#xa;teamID (PK)&#xa;name" vertex="1">
+          <mxGeometry height="100" width="220" x="30" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="rogMhIze_BVC0yehM4i2-17" edge="1" parent="1" source="rogMhIze_BVC0yehM4i2-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="rogMhIze_BVC0yehM4i2-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rogMhIze_BVC0yehM4i2-4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;" value="MAPS&#xa;──────────&#xa;mapID (PK)&#xa;name" vertex="1">
+          <mxGeometry height="100" width="220" x="30" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="rogMhIze_BVC0yehM4i2-18" edge="1" parent="1" source="rogMhIze_BVC0yehM4i2-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;endArrow=none;endFill=0;" target="rogMhIze_BVC0yehM4i2-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rogMhIze_BVC0yehM4i2-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;" value="SIDES&#xa;──────────&#xa;sideID (PK)&#xa;name" vertex="1">
+          <mxGeometry height="100" width="220" x="30" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="rogMhIze_BVC0yehM4i2-6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;" value="MATCHES&#xa;──────────&#xa;matchID (PK)&#xa;teamID (FK)&#xa;mapID (FK)&#xa;sideID (FK)&#xa;score&#xa;date" vertex="1">
+          <mxGeometry height="180" width="260" x="360" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="rogMhIze_BVC0yehM4i2-7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff;" value="PLAYER_STATS&#xa;──────────&#xa;matchID (FK)&#xa;playerID (FK)&#xa;teamID (FK)&#xa;mapID (FK)&#xa;sideID (FK)&#xa;k, d, ek, ed&#xa;roundSwing&#xa;adr, eadr&#xa;kast, ekast&#xa;rating" vertex="1">
+          <mxGeometry height="260" width="300" x="340" y="-30" as="geometry" />
+        </mxCell>
+        <mxCell id="rogMhIze_BVC0yehM4i2-12" edge="1" parent="1" source="rogMhIze_BVC0yehM4i2-6" style="endArrow=none;" target="rogMhIze_BVC0yehM4i2-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
