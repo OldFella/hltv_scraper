@@ -4,6 +4,7 @@ from tools.scraper import match_scraper
 import pandas as pd
 import os
 import time
+import gc
 
 def multiprocessing(func, workers):
     res = []
@@ -17,7 +18,7 @@ def multiprocessing(func, workers):
 
 def match_scraping():
     m_todo = pd.read_csv('data/matches/matches_todo.csv')
-    row = m_todo.loc[1]
+    row = m_todo.loc[0]
     m_todo.loc[1:].to_csv('data/matches/matches_todo.csv', index=False)
     ms = match_scraper()
     data = ms.open_match(row)
@@ -33,15 +34,21 @@ def get_matches_in_db():
         return df['matchID'].unique()
     return [0]
 
+def remove_forfeit(df):
+    df_copy = df.copy()
+    df_copy['sum'] = df_copy['score1'] + df_copy['score2']
+    return df[df_copy['sum'] != 1]
+
 def main(n_workers):
     # check if matches_todo.csv exists
     # if not os.path.exists('data/matches/matches_todo.csv'):
     matches = load_matches()
     m_todo = matches
     ids_in_db = get_matches_in_db()
+    m_todo = remove_forfeit(m_todo)
     m_todo = m_todo[~m_todo['matchID'].isin(ids_in_db)]
-    m_todo.to_csv('data/matches/matches_todo.csv',index=False)
 
+    m_todo.to_csv('data/matches/matches_todo.csv',index=False)
     # else:
     #     m_todo = pd.read_csv('data/matches/matches_todo.csv')
     
@@ -61,10 +68,9 @@ def main(n_workers):
     else:
         db_players = pd.read_csv('data/database/players.csv')
 
-    MAX_ITER = 20
+    # MAX_ITER = 20
     it = 0
-    while len(m_todo) > 0 and it < MAX_ITER:
-        it += 1
+    while len(m_todo) > 0:
         m_todo = pd.read_csv('data/matches/matches_todo.csv')
 
         print(f'{len(m_todo)} still to go...')
@@ -89,6 +95,7 @@ def main(n_workers):
                 db_players = players
             else:
                 db_players = pd.concat([db_players, players])
+                db_players = db_players.drop_duplicates()
                 db_players.to_csv('data/database/players.csv',index=False)
             
             if db_matches.empty:
@@ -96,7 +103,18 @@ def main(n_workers):
             else:
                 db_matches = pd.concat([db_matches, matches])
                 db_matches.to_csv('data/database/matches.csv',index=False)
-        
+
+            # backup every 100 websites
+            if it % 100 == 99:
+                
+                db_player_stats.to_csv(f'data/database/backup/player_stats{it}.csv',index=False)
+                db_players.to_csv(f'data/database/backup/players{it}.csv',index=False)
+                db_matches.to_csv(f'data/database/backup/matches{it}.csv',index=False)
+        c = gc.collect()
+
+
+        it += 1
+
         
         
     

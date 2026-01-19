@@ -24,8 +24,7 @@ class result_scraper:
         self.teams = []
         self.results_data = []
 
-        self.results_table = pd.read_csv(f"{self.dir}matches.csv",
-                                         names=['matchID', 'team1', 'score1', 'team2','score2','event' ,'url'])
+        self.results_table = pd.read_csv(f"{self.dir}matches.csv")
         self.results = pd.DataFrame(columns=['matchID', 'team1', 'score1', 'team2','score2','event' ,'url'])
 
         proxy = "20.235.159.154:80"
@@ -73,11 +72,12 @@ class result_scraper:
             self.results.loc[i] = [match_id, teams[0], int(score[0][1]), teams[1], int(score[0][3]), teams[2], link]
     
     def extract_relevant_results(self):
-        self.results.drop_duplicates()
+        self.results = self.results.drop_duplicates()
         self.results = self.results[self.results['team1'].isin(self.teams) | self.results['team2'].isin(self.teams)]
 
     def write_rankings(self):
         self.results = pd.concat([self.results, self.results_table])
+        self.results = self.results.drop_duplicates()
         self.results.to_csv(f"{self.dir}matches.csv", index= False)
 
     def get_results_data(self):
