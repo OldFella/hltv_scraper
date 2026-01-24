@@ -71,7 +71,7 @@ def main(n_workers, f_matches = 'data/matches/matches.csv', result_path = 'data/
     while len(m_todo) > 0:
         m_todo = pd.read_csv(f'{result_path}matches_todo.csv')
 
-        print(f'{len(m_todo)} still to go...', end = '\r')
+        print(f'{len(m_todo)} still to go...',end = '\r')
         mp_results = multiprocessing(match_scraping, n_workers, result_path)
         results = []
         for res in mp_results:
@@ -82,25 +82,24 @@ def main(n_workers, f_matches = 'data/matches/matches.csv', result_path = 'data/
 
         for dfs in results:
             player_stats, players, matches = dfs
-
             if db_player_stats.empty:
                 db_player_stats = player_stats
             else:
                 db_player_stats = pd.concat([db_player_stats, player_stats])
-                db_player_stats.to_csv(f'{result_path}player_stats.csv',index=False)
+            db_player_stats.to_csv(f'{result_path}player_stats.csv',index=False)
 
             if db_players.empty:
                 db_players = players
             else:
                 db_players = pd.concat([db_players, players])
                 db_players = db_players.drop_duplicates()
-                db_players.to_csv(f'{result_path}players.csv',index=False)
+            db_players.to_csv(f'{result_path}players.csv',index=False)
             
             if db_matches.empty:
                 db_matches = matches
             else:
                 db_matches = pd.concat([db_matches, matches])
-                db_matches.to_csv(f'{result_path}matches.csv',index=False)
+            db_matches.to_csv(f'{result_path}matches.csv',index=False)
 
             # backup every 100 websites
             if it % 100 == 99:

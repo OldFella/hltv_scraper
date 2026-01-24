@@ -10,7 +10,8 @@ class fantasy:
         soup = self.open_html(file)
         fantasy, id = self.find_fantasy(soup)
         teams = self.get_teams(fantasy)
-        df = self.create_table(teams, id)
+        title = self.get_title(soup)
+        df = self.create_table(teams, id,title)
 
         return df
 
@@ -49,17 +50,22 @@ class fantasy:
         
         return result
 
+    def get_title(self, soup):
+        nav_item = soup.find_all('ul', class_ ='nav-item')[11]
 
-    def create_table(self,d,id):
-        df = pd.DataFrame(columns=['fantasyID','team', 'player', 'cost'])
+        title = nav_item.find_all('div', class_ ="text-ellipsis")[-1]
+
+        return title.text
+        
+
+    def create_table(self,d,id,title):
+        df = pd.DataFrame(columns=['fantasyID','title','team', 'player', 'cost'])
         for name, team_content in d.items():
             for player, cost in team_content.items():
                 cost = cost.replace("$",'')
                 cost = cost.replace(',000', '')
-                df.loc[len(df)] = [id, name, player, int(cost)]
+                df.loc[len(df)] = [id, title,name ,player, int(cost)]
         return df
-
-
 
 
 

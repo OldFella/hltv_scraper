@@ -1,6 +1,6 @@
-mariadb
 numpy
 selenium
 pandas
-ipykernel
-SQLAlchemy
+bs4
+psycopg2
+
