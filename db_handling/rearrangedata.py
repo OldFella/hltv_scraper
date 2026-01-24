@@ -52,9 +52,7 @@ def sub_names_player_stats():
     player_stats = player_stats.join(sides.set_index('side'), on=['side'])
     player_stats = player_stats.join(teams.set_index('team'), on=['team'])
     player_stats = player_stats.dropna()
-    # player_stats = player_stats[['matchID','teamID','score', 'mapID','sideID', 'date']]
     player_stats['teamID'] = player_stats['teamID'].astype(int)
-    # player_stats['score'] = player_stats['score'].astype(int)
     cols = ['matchID', 'playerID','teamID', 'mapID', 'sideID', 'k', 'd', 'ek','ed', 'roundSwing', 'adr',  'eadr',  'kast',  'ekast',  'rating']
     print(player_stats)
     player_stats = player_stats[cols]

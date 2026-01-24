@@ -5,32 +5,33 @@ import pandas as pd
 import os
 import time
 import gc
+import argparse
 
-def multiprocessing(func, workers):
+def multiprocessing(func, workers, args):
     res = []
     with ProcessPoolExecutor(workers) as ex:
         for i in range(workers):
-            res.append(ex.submit(func))
+            res.append(ex.submit(func, args))
             time.sleep(0.1)
 
     return res
 
 
-def match_scraping():
-    m_todo = pd.read_csv('data/matches/matches_todo.csv')
+def match_scraping(path):
+    m_todo = pd.read_csv(f'{path}matches_todo.csv')
     row = m_todo.loc[0]
-    m_todo.loc[1:].to_csv('data/matches/matches_todo.csv', index=False)
+    m_todo.loc[1:].to_csv(f'{path}matches_todo.csv', index=False)
     ms = match_scraper()
     data = ms.open_match(row)
     ms.get_stats(data,row)
     return ms.player_stats, ms.players, ms.match
 
-def load_matches():
-    return pd.read_csv('data/matches/matches.csv')
+def load_matches(f_matches):
+    return pd.read_csv(f_matches)
 
-def get_matches_in_db():
-    if os.path.exists('data/database/matches.csv'):
-        df = pd.read_csv('data/database/matches.csv')
+def get_matches_in_db(matches):
+    if os.path.exists(matches):
+        df = pd.read_csv(matches)
         return df['matchID'].unique()
     return [0]
 
@@ -39,42 +40,40 @@ def remove_forfeit(df):
     df_copy['sum'] = df_copy['score1'] + df_copy['score2']
     return df[df_copy['sum'] != 1]
 
-def main(n_workers):
-    # check if matches_todo.csv exists
-    # if not os.path.exists('data/matches/matches_todo.csv'):
-    matches = load_matches()
+def main(n_workers, f_matches = 'data/matches/matches.csv', result_path = 'data/database/'):
+
+    matches = load_matches(f_matches)
     m_todo = matches
-    ids_in_db = get_matches_in_db()
+    ids_in_db = get_matches_in_db(f'{result_path}/matches.csv')
+    print(ids_in_db)
     m_todo = remove_forfeit(m_todo)
     m_todo = m_todo[~m_todo['matchID'].isin(ids_in_db)]
 
-    m_todo.to_csv('data/matches/matches_todo.csv',index=False)
-    # else:
-    #     m_todo = pd.read_csv('data/matches/matches_todo.csv')
+    m_todo.to_csv(f'{result_path}matches_todo.csv',index=False)
     
-    if not os.path.exists('data/database/matches.csv'):
+    if not os.path.exists(f'{result_path}/matches.csv'):
         db_matches = pd.DataFrame()
     else:
-        db_matches = pd.read_csv('data/database/matches.csv')
+        db_matches = pd.read_csv(f'{result_path}/matches.csv')
     
-    if not os.path.exists('data/database/player_stats.csv'):
+    if not os.path.exists(f'{result_path}player_stats.csv'):
         db_player_stats = pd.DataFrame()
     else:
-        db_player_stats = pd.read_csv('data/database/player_stats.csv')
+        db_player_stats = pd.read_csv(f'{result_path}player_stats.csv')
 
     
-    if not os.path.exists('data/database/players.csv'):
+    if not os.path.exists(f'{result_path}players.csv'):
         db_players = pd.DataFrame()
     else:
-        db_players = pd.read_csv('data/database/players.csv')
+        db_players = pd.read_csv(f'{result_path}players.csv')
 
     # MAX_ITER = 20
     it = 0
     while len(m_todo) > 0:
-        m_todo = pd.read_csv('data/matches/matches_todo.csv')
+        m_todo = pd.read_csv(f'{result_path}matches_todo.csv')
 
         print(f'{len(m_todo)} still to go...')
-        mp_results = multiprocessing(match_scraping, n_workers)
+        mp_results = multiprocessing(match_scraping, n_workers, result_path)
         results = []
         for res in mp_results:
             try:
@@ -89,27 +88,27 @@ def main(n_workers):
                 db_player_stats = player_stats
             else:
                 db_player_stats = pd.concat([db_player_stats, player_stats])
-                db_player_stats.to_csv('data/database/player_stats.csv',index=False)
+                db_player_stats.to_csv(f'{result_path}player_stats.csv',index=False)
 
             if db_players.empty:
                 db_players = players
             else:
                 db_players = pd.concat([db_players, players])
                 db_players = db_players.drop_duplicates()
-                db_players.to_csv('data/database/players.csv',index=False)
+                db_players.to_csv(f'{result_path}players.csv',index=False)
             
             if db_matches.empty:
                 db_matches = matches
             else:
                 db_matches = pd.concat([db_matches, matches])
-                db_matches.to_csv('data/database/matches.csv',index=False)
+                db_matches.to_csv(f'{result_path}matches.csv',index=False)
 
             # backup every 100 websites
             if it % 100 == 99:
                 
-                db_player_stats.to_csv(f'data/database/backup/player_stats{it}.csv',index=False)
-                db_players.to_csv(f'data/database/backup/players{it}.csv',index=False)
-                db_matches.to_csv(f'data/database/backup/matches{it}.csv',index=False)
+                db_player_stats.to_csv(f'{result_path}backup/player_stats{it}.csv',index=False)
+                db_players.to_csv(f'{result_path}backup/players{it}.csv',index=False)
+                db_matches.to_csv(f'{result_path}backup/matches{it}.csv',index=False)
         c = gc.collect()
 
 
@@ -121,6 +120,12 @@ def main(n_workers):
 
 
 if __name__ == '__main__':
-    results = main(n_workers=4)
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--matches', type = str, default = './data/matches/')
+    parser.add_argument('--result', type = str, default = 'data/database/')
+
+    args = parser.parse_args()
+    results = main(n_workers=4, f_matches=args.matches, result_path=args.result)
 
     

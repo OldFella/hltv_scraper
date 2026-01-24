@@ -11,7 +11,7 @@ class result_scraper:
     """
     Opens hltv.org/results and saves relevant matches
     """
-    def __init__(self,page=0, url="https://www.hltv.org/results", top = 100):
+    def __init__(self,page=0, url="https://www.hltv.org/results", top = 100,teams_path = "./data/team_rankings/" ,dir = './data/matches/'):
         self.page = page
         self.url = url
         self.top = top
@@ -19,12 +19,13 @@ class result_scraper:
             self.url += f'?offset={self.page*100}'
 
         self.date = datetime.today().strftime('%Y-%m-%d')
-        self.teams_path = "./data/team_rankings/"
-        self.dir = "./data/matches/"
+        self.teams_path = teams_path
+        self.dir = dir
         self.teams = []
         self.results_data = []
-
-        self.results_table = pd.read_csv(f"{self.dir}matches.csv")
+        self.results_table = pd.DataFrame(columns=['matchID'])
+        if os.path.exists(f"{self.dir}matches.csv"):
+            self.results_table = pd.read_csv(f"{self.dir}matches.csv")
         self.results = pd.DataFrame(columns=['matchID', 'team1', 'score1', 'team2','score2','event' ,'url'])
 
         proxy = "20.235.159.154:80"
@@ -73,7 +74,7 @@ class result_scraper:
     
     def extract_relevant_results(self):
         self.results = self.results.drop_duplicates()
-        self.results = self.results[self.results['team1'].isin(self.teams) | self.results['team2'].isin(self.teams)]
+        self.results = self.results[self.results['team1'].isin(self.teams) & self.results['team2'].isin(self.teams)]
 
     def write_rankings(self):
         self.results = pd.concat([self.results, self.results_table])
