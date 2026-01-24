@@ -117,7 +117,7 @@ def main(n_workers):
     teams.drop(columns = ['points'], axis = 1 ,inplace= True)
     teams.to_csv(f'{data_folder}teams.csv',index = False)
 
-
+    n_workers = min(n_workers, len(matches))
     sm.main(n_workers = n_workers,f_matches = f_matches, result_path = data_folder)
     rearrange_data(dbw, data_folder)
 
