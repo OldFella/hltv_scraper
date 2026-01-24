@@ -1,4 +1,4 @@
-from db_handler import load_config, db_writer
+from db_handler import db_writer
 import pandas as pd
 import numpy as np
 import os
@@ -87,8 +87,7 @@ def main(n_workers):
         tmp_id = random_N_digits(10)
         tmp_folder = 'tmp_' + str(tmp_id)
 
-    conf = load_config()
-    dbw = db_writer(conf)
+    dbw = db_writer()
 
     ts = team_scraper()
     teams_ranking = "../data/team_rankings/"
@@ -102,8 +101,6 @@ def main(n_workers):
     while not FLAG_ISDONE:
         rs = get_results(page = page, dir = tmp_folder + '/', teams_path=teams_ranking)
         matches = get_matches(dbw, tmp_folder)
-
-        print(page, len(rs.get_results()), len(matches))
 
         if len(rs.get_results()) != len(matches):
             FLAG_ISDONE = True

@@ -2,17 +2,33 @@ import pandas as pd
 import psycopg2
 import numpy as np
 import io
+from configparser import ConfigParser
+
 
 class db_handler:
-    def __init__(self, config):
+    def __init__(self, filename = 'database.ini', section = 'postgresql'):
+        config = self.load_config(filename=filename, section=section)
         self.con = psycopg2.connect(**config)
         self.cur = self.con.cursor()
 
+    
+    def load_config(self,filename='database.ini', section='postgresql'):
+        parser = ConfigParser()
+        parser.read(filename)
+
+        # get section, default to postgresql
+        config = {}
+        if parser.has_section(section):
+            params = parser.items(section)
+            for param in params:
+                config[param[0]] = param[1]
+        else:
+            raise Exception('Section {0} not found in the {1} file'.format(section, filename))
+
+        return config
+
 
 class db_reader(db_handler):
-
-    def __init__(self,config):
-        super().__init__(config)
         
     def get_matchids(self):
         query = "SELECT DISTINCT matchid FROM matches;"
@@ -46,9 +62,7 @@ class db_reader(db_handler):
         return cols
     
 class db_writer(db_reader):
-    def __init__(self, config):
-        super().__init__(config)
-    
+
     def insert(self,df, table):
         assert table in ['matches', 'players', 'maps', 'teams', 'player_stats']
         table_cols = self.get_columns(table)
@@ -64,22 +78,6 @@ class db_writer(db_reader):
         self.con.commit()
 
 
-from configparser import ConfigParser
-
-def load_config(filename='database.ini', section='postgresql'):
-    parser = ConfigParser()
-    parser.read(filename)
-
-    # get section, default to postgresql
-    config = {}
-    if parser.has_section(section):
-        params = parser.items(section)
-        for param in params:
-            config[param[0]] = param[1]
-    else:
-        raise Exception('Section {0} not found in the {1} file'.format(section, filename))
-
-    return config
 
 # config = load_config(section='user_read_only')
 # dbh = db_reader(config)

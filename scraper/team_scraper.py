@@ -31,11 +31,11 @@ class team_scraper:
         
 
         else:
-            print("open website...")
+            print("open website...", end='\r')
             self.open_rankings()
-            print("get rankings...")
+            print("get rankings...", end='\r')
             self.get_rankings()
-            print("save...")
+            print("save...", end='\r')
             self.write_teams()
 
 

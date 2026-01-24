@@ -1,6 +1,6 @@
 from concurrent.futures import ProcessPoolExecutor
 
-from tools.scraper import match_scraper
+from scraper.match_scraper import match_scraper
 import pandas as pd
 import os
 import time
@@ -45,7 +45,6 @@ def main(n_workers, f_matches = 'data/matches/matches.csv', result_path = 'data/
     matches = load_matches(f_matches)
     m_todo = matches
     ids_in_db = get_matches_in_db(f'{result_path}/matches.csv')
-    print(ids_in_db)
     m_todo = remove_forfeit(m_todo)
     m_todo = m_todo[~m_todo['matchID'].isin(ids_in_db)]
 
@@ -72,7 +71,7 @@ def main(n_workers, f_matches = 'data/matches/matches.csv', result_path = 'data/
     while len(m_todo) > 0:
         m_todo = pd.read_csv(f'{result_path}matches_todo.csv')
 
-        print(f'{len(m_todo)} still to go...')
+        print(f'{len(m_todo)} still to go...', end = '\r')
         mp_results = multiprocessing(match_scraping, n_workers, result_path)
         results = []
         for res in mp_results:
