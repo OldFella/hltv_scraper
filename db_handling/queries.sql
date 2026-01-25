@@ -161,7 +161,7 @@ order by player
     ;
 
 -- get average rating per game for all players in the fantasy 591
-select * from (select p.name as player, ROUND(cast(avg(ps.rating) as numeric),2) as avg_rating,count(ps.rating) as n_maps
+select * from (select p.name as player, ROUND(cast(avg(ps.rating) as numeric),3) as avg_rating,count(ps.rating) as n_games
     from player_stats ps 
     join teams t
     on ps.teamid = t.teamid

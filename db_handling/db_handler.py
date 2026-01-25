@@ -31,7 +31,7 @@ class db_handler:
 class db_reader(db_handler):
     def __init__(self, filename = 'database.ini', section = 'postgresql'):
         super().__init__(filename, section)
-        self.allowed_tables = ['matches', 'players', 'maps', 'teams', 'player_stats', 'fantasies', 'fantasy_overview']
+        self.allowed_tables = ['matches', 'players', 'maps','sides', 'teams', 'player_stats', 'fantasies', 'fantasy_overview']
         
     def get_matchids(self):
         query = "SELECT DISTINCT matchid FROM matches;"

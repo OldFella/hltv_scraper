@@ -11,7 +11,7 @@ class team_scraper:
     """
     Scrapes current hltv valve rankings
     """
-    def __init__(self, url = "https://www.hltv.org/valve-ranking/teams/"):
+    def __init__(self, url = "https://www.hltv.org/valve-ranking/teams/", dir = "../data/team_rankings/"):
         self.website = url
 
         self.options = Options()
@@ -22,7 +22,7 @@ class team_scraper:
 
         self.time = datetime.today().strftime('%Y-%m-%d')
 
-        self.dir = "../data/team_rankings/"
+        self.dir = dir
 
         # only scrape if it does not already exist:
 
