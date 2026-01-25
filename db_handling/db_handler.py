@@ -29,6 +29,9 @@ class db_handler:
 
 
 class db_reader(db_handler):
+    def __init__(self, filename = 'database.ini', section = 'postgresql'):
+        super().__init__(filename, section)
+        self.allowed_tables = ['matches', 'players', 'maps', 'teams', 'player_stats', 'fantasies', 'fantasy_overview']
         
     def get_matchids(self):
         query = "SELECT DISTINCT matchid FROM matches;"
@@ -45,7 +48,7 @@ class db_reader(db_handler):
         return ids
     
     def get_table(self, table):
-        assert table in ['maps', 'sides', 'player_stats', 'players', 'matches', 'teams']
+        assert table in self.allowed_tables
         query =f"SELECT * FROM {table};"
         self.cur.execute(query)
         table = self.cur.fetchall()
@@ -54,7 +57,7 @@ class db_reader(db_handler):
         return pd.DataFrame(table, columns=colnames)
 
     def get_columns(self,table):
-        assert table in ['maps', 'sides', 'player_stats', 'players', 'matches', 'teams']
+        assert table in self.allowed_tables
         query = f"SELECT column_name, data_type FROM information_schema.columns WHERE table_name = '{table}'"
         self.cur.execute(query)
         cols = self.cur.fetchall()
@@ -64,7 +67,7 @@ class db_reader(db_handler):
 class db_writer(db_reader):
 
     def insert(self,df, table):
-        assert table in ['matches', 'players', 'maps', 'teams', 'player_stats']
+        assert table in self.allowed_tables
         table_cols = self.get_columns(table)
         col_names, col_dtypes = table_cols
         df = df[col_names]

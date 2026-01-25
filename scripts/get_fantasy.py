@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import pandas as pd
 import argparse
+import re
 
 
 
@@ -35,6 +36,8 @@ class fantasy:
     def get_teams(self,fantasy):
         teams = fantasy.find_all('div', class_ = 'teamCon')
         result = {}
+
+        player_pattern = r'/stats/players/([0-9]*)/'
         for team in teams:
             header = team.find('div', class_ = 'teamHeader')
             name = header.find('div', class_ = 'teamName text-ellipsis').text
@@ -42,9 +45,13 @@ class fantasy:
             players = team.find_all('div', class_ = 'teamPlayer')
             team_content = {}
             for player in players:
-                player_name = player.find('span', class_ = 'text-ellipsis').text
+                player_id = player.find('a', class_ = "player-stats-link")
+                player_id = player_id.get('href')
+                player_id = re.findall(player_pattern, player_id)[0]
+                player_id = int(player_id)
+
                 player_cost = player.find('div', class_ = 'playerButtonText').text
-                team_content[player_name] = player_cost
+                team_content[player_id] = player_cost
             
             result[name] = team_content
         
@@ -59,7 +66,7 @@ class fantasy:
         
 
     def create_table(self,d,id,title):
-        df = pd.DataFrame(columns=['fantasyID','title','team', 'player', 'cost'])
+        df = pd.DataFrame(columns=['fantasyID','title','team', 'playerid', 'cost'])
         for name, team_content in d.items():
             for player, cost in team_content.items():
                 cost = cost.replace("$",'')

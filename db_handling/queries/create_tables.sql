@@ -49,3 +49,19 @@ CREATE TABLE player_stats (
     rating FLOAT,
     PRIMARY KEY (matchid,playerid ,teamid, mapid,sideid)
 );
+
+
+CREATE TABLE fantasy_overview(
+    fantasyid INT,
+    name VARCHAR(255),
+    PRIMARY KEY (fantasyid)
+);
+
+CREATE TABLE fantasies (
+    fantasyid INT REFERENCES fantasy_overview (fantasyid),
+    teamid INT REFERENCES teams(teamid),
+    playerid INT REFERENCES players (playerid),
+    cost INT,
+    PRIMARY KEY (fantasyid, teamid, playerid)
+);
+
