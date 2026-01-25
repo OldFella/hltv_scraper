@@ -13,8 +13,14 @@ Small project to extract data from the hltv.org website to help building better 
 ## TODO:
   - Scraper for VRS Ranking ✅
   - Scraper for necessary matches with links ✅
-  - Extracting necessary information from the match pages
-  - Building Database for Teams and Players
+  - Extracting necessary information from the match pages ✅
+  - Building Database for Teams and Players ✅
+  - Automating scraping process ✅
   - Create queries for fantasy teams
+
+## Minor TODO:
+  - adding events to the Database
+  - adding event tiers
+    => creating new table for match information, like event and date 
 
 
