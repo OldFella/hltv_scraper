@@ -39,6 +39,12 @@ python src/scripts/scrape_results.py
 python src/db_handling/scrape_db.py
 ```
 
+- Automatically scrape and update database:
+
+```bash
+python src/main.py
+```
+
 ## TODO:
   - Scraper for VRS Ranking ✅
   - Scraper for necessary matches with links ✅

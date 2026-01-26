@@ -114,6 +114,7 @@ def main(n_workers, dir, config):
     
     f_matches = f'{tmp_folder}/matches.csv'
     matches.to_csv(f_matches, index = False)
+    print(matches)
 
     teams = ts.teams
     teams.drop(columns = ['points'], axis = 1 ,inplace= True)

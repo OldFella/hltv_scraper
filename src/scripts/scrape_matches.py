@@ -32,7 +32,7 @@ def load_matches(f_matches):
 def get_matches_in_db(matches):
     if os.path.exists(matches):
         df = pd.read_csv(matches)
-        return df['matchID'].unique()
+        return df['matchid'].unique()
     return [0]
 
 def remove_forfeit(df):
