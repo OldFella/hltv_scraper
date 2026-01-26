@@ -27,7 +27,8 @@ pip install -r requirements.txt
 - create user with write permissions
 
 - create table using:
-  [create_tables.sql](create_database/create_tables.sql)
+
+[create_tables.sql](create_database/create_tables.sql)
 
 
 ## Usage:
