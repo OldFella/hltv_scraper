@@ -19,6 +19,17 @@ cd hltv_scraper
 pip install -r requirements.txt
 ```
 
+## Create Database:
+
+- install postgresql
+- make new database
+- create user to with read permissions
+- create user with write permissions
+
+- create table using:
+  [create_database/player_stats.csv](data/database_sample/player_stats.csv)
+
+
 ## Usage:
 
 - Get current team rankings:
@@ -33,16 +44,22 @@ python src/scripts/scrape_teams.py
 python src/scripts/scrape_results.py
 ```
 
-- Update database:
-
-```bash
-python src/db_handling/scrape_db.py
-```
-
 - Automatically scrape and update database:
 
 ```bash
 python src/main.py
+```
+
+- Extract fantasy table from downloaded html:
+
+```bash
+python src/scripts/get_fantasy.py
+```
+
+- Insert fantasy into database:
+
+```bash
+python src/scripts/update_fantasy.py
 ```
 
 ## TODO:
