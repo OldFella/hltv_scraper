@@ -59,6 +59,7 @@ def rearrange_data(dbw, dir):
 
 
 def rearrange_col(df,df_ids, on):
+    print(df.head(), df_ids.head(), on)
     df = df.join(df_ids.set_index(on), on = on)
     df = df.dropna()
     df.drop(columns = [on], axis = 1, inplace = True)
@@ -76,12 +77,12 @@ def remove_duplicates(file, dir, dbw, table):
     return df
 
 
-def main(n_workers):
+def main(n_workers, dir):
 
-    
     tmp_id = random_N_digits(10)
 
     tmp_folder = 'tmp_' + str(tmp_id)
+    
 
     while os.path.exists(tmp_folder):
         tmp_id = random_N_digits(10)
@@ -89,8 +90,8 @@ def main(n_workers):
 
     dbw = db_writer()
 
-    ts = team_scraper()
-    teams_ranking = "../data/team_rankings/"
+    teams_ranking = f"{dir}team_rankings/"
+    ts = team_scraper(dir = teams_ranking)
 
     os.mkdir(tmp_folder)
     data_folder = tmp_folder + '/data/'
@@ -106,7 +107,7 @@ def main(n_workers):
             FLAG_ISDONE = True
         
         page += 1
-    
+
     if len(matches) == 0:
         return
     
@@ -141,9 +142,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--n_workers','-n', type = int, default = 4)
+    parser.add_argument('--dir', '-d', type = str, default = '../../data/')
     args = parser.parse_args()
 
     
-    main(n_workers = args.n_workers)
+    main(n_workers = args.n_workers, dir = args.dir)
 
 

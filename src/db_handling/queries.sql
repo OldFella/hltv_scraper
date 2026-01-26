@@ -63,7 +63,7 @@ select p.name, t.name, avg(ps.rating) as avg_rating, count(ps.rating) as n_games
     on ps.teamid = t.teamid
     join players p
     on ps.playerid = p.playerid
-    where p.name = 'zweih' and ps.sideid = 0 and ps.mapid != 0
+    where p.name = 'zweih' and ps.sideid = 0 and ps.mapid = 0
     group by p.name, t.name
     ;
 

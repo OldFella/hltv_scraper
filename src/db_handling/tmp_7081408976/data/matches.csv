@@ -1,0 +1,75 @@
+matchID,map,side,date,team,score
+2389281,All,total,2026-01-25,Falcons,0.0
+2389281,All,total,2026-01-25,PARIVISION,3.0
+2389281,mrg,t,2026-01-25,Falcons,4.0
+2389281,mrg,ct,2026-01-25,PARIVISION,8
+2389281,mrg,ct,2026-01-25,Falcons,5
+2389281,mrg,t,2026-01-25,PARIVISION,5
+2389281,mrg,total,2026-01-25,Falcons,9
+2389281,mrg,total,2026-01-25,PARIVISION,13
+2389281,d2,ct,2026-01-25,Falcons,4
+2389281,d2,t,2026-01-25,PARIVISION,8
+2389281,d2,t,2026-01-25,Falcons,7
+2389281,d2,ct,2026-01-25,PARIVISION,5
+2389281,d2,total,2026-01-25,Falcons,11
+2389281,d2,total,2026-01-25,PARIVISION,13
+2389281,inf,ct,2026-01-25,Falcons,6
+2389281,inf,t,2026-01-25,PARIVISION,6
+2389281,inf,t,2026-01-25,Falcons,5
+2389281,inf,ct,2026-01-25,PARIVISION,7
+2389281,inf,total,2026-01-25,Falcons,11
+2389281,inf,total,2026-01-25,PARIVISION,13
+2389203,All,total,2026-01-26,Nemiga,2.0
+2389203,All,total,2026-01-26,illwill,0.0
+2389203,anb,ct,2026-01-26,Nemiga,7.0
+2389203,anb,t,2026-01-26,illwill,5
+2389203,anb,t,2026-01-26,Nemiga,6
+2389203,anb,ct,2026-01-26,illwill,0
+2389203,anb,total,2026-01-26,Nemiga,13
+2389203,anb,total,2026-01-26,illwill,5
+2389203,nuke,ct,2026-01-26,Nemiga,10
+2389203,nuke,t,2026-01-26,illwill,2
+2389203,nuke,t,2026-01-26,Nemiga,3
+2389203,nuke,ct,2026-01-26,illwill,8
+2389203,nuke,total,2026-01-26,Nemiga,13
+2389203,nuke,total,2026-01-26,illwill,10
+2389454,All,total,2026-01-25,Gaimin Gladiators,0.0
+2389454,All,total,2026-01-25,MIBR,3.0
+2389454,anb,t,2026-01-25,Gaimin Gladiators,8.0
+2389454,anb,ct,2026-01-25,MIBR,4
+2389454,anb,ct,2026-01-25,Gaimin Gladiators,1
+2389454,anb,t,2026-01-25,MIBR,9
+2389454,anb,total,2026-01-25,Gaimin Gladiators,9
+2389454,anb,total,2026-01-25,MIBR,13
+2389454,anc,t,2026-01-25,Gaimin Gladiators,7
+2389454,anc,ct,2026-01-25,MIBR,5
+2389454,anc,ct,2026-01-25,Gaimin Gladiators,3
+2389454,anc,t,2026-01-25,MIBR,8
+2389454,anc,total,2026-01-25,Gaimin Gladiators,10
+2389454,anc,total,2026-01-25,MIBR,13
+2389454,inf,ct,2026-01-25,Gaimin Gladiators,3
+2389454,inf,t,2026-01-25,MIBR,9
+2389454,inf,t,2026-01-25,Gaimin Gladiators,6
+2389454,inf,ct,2026-01-25,MIBR,4
+2389454,inf,total,2026-01-25,Gaimin Gladiators,9
+2389454,inf,total,2026-01-25,MIBR,13
+2389528,All,total,2026-01-25,Fingers Crossed,2.0
+2389528,All,total,2026-01-25,Metizport,1.0
+2389528,nuke,t,2026-01-25,Fingers Crossed,7.0
+2389528,nuke,ct,2026-01-25,Metizport,5
+2389528,nuke,ct,2026-01-25,Fingers Crossed,6
+2389528,nuke,t,2026-01-25,Metizport,3
+2389528,nuke,total,2026-01-25,Fingers Crossed,13
+2389528,nuke,total,2026-01-25,Metizport,8
+2389528,inf,ct,2026-01-25,Fingers Crossed,5
+2389528,inf,t,2026-01-25,Metizport,7
+2389528,inf,t,2026-01-25,Fingers Crossed,6
+2389528,inf,ct,2026-01-25,Metizport,6
+2389528,inf,total,2026-01-25,Fingers Crossed,11
+2389528,inf,total,2026-01-25,Metizport,13
+2389528,anc,t,2026-01-25,Fingers Crossed,8
+2389528,anc,ct,2026-01-25,Metizport,4
+2389528,anc,ct,2026-01-25,Fingers Crossed,5
+2389528,anc,t,2026-01-25,Metizport,3
+2389528,anc,total,2026-01-25,Fingers Crossed,13
+2389528,anc,total,2026-01-25,Metizport,7
