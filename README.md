@@ -27,7 +27,7 @@ pip install -r requirements.txt
 - create user with write permissions
 
 - create table using:
-  [create_database/player_stats.csv](data/database_sample/player_stats.csv)
+  [create_database/create_tables.sql](create_tables.sql)
 
 
 ## Usage:
@@ -75,7 +75,7 @@ python src/scripts/update_fantasy.py
 
 You can preview a sample of the scraped data directly on GitHub:
 
-➡️ [data/database_sample/player_stats.csv](data/database_sample/player_stats.csv)
+➡️ [data/database_sample/player_stats.csv](player_stats.csv)
 
 
 ## Tech Stack
