@@ -1,15 +1,12 @@
-from db_handler import db_writer
+from db_handling.db_handler import db_writer
 import pandas as pd
 import numpy as np
 import os
 import shutil
 from datetime import datetime
 
-import sys
-sys.path.append('../')
 from scraper.result_scraper import result_scraper
 import scripts.scrape_matches as sm
-
 from scraper.team_scraper import team_scraper
 import argparse
 
@@ -76,7 +73,7 @@ def remove_duplicates(file, dir, dbw, table):
     return df
 
 
-def main(n_workers, dir):
+def main(n_workers, dir, config):
 
     tmp_id = datetime.today().strftime('%Y-%m-%d')
 
@@ -97,7 +94,7 @@ def main(n_workers, dir):
         os.mkdir(data_folder)
 
 
-    dbw = db_writer()
+    dbw = db_writer(filename=config)
 
     ts = team_scraper(dir = teams_ranking) 
 
@@ -150,10 +147,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--n_workers','-n', type = int, default = 4)
-    parser.add_argument('--dir', '-d', type = str, default = '../../data/temp/')
+    parser.add_argument('--dir', '-d', type = str, default = '../data/temp/')
+    parser.add_argument('--config', '-c', type=str, default = 'db_handling/database.ini')
     args = parser.parse_args()
 
     
-    main(n_workers = args.n_workers, dir = args.dir)
+    main(n_workers = args.n_workers, dir = args.dir, config = args.config)
 
 
