@@ -31,4 +31,9 @@ pip install -r requirements.txt
 
 You can preview a sample of the scraped data directly on GitHub:
 
-➡️ [data/database_sample/](data/database_sample/)
+➡️ [data/database_sample/player_stats.csv](data/database_sample/player_stats.csv)
+
+
+## Tech Stack
+
+Python • Selenium • beautifulsoup4 • psycopg2 • JinjaSQL • PostgreSQL • pandas
