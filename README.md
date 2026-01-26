@@ -1,14 +1,22 @@
 # HLTV Scraper
 
-Small project to extract data from the hltv.org website to help building better fantasy teams.
+Project to scrape data from the hltv.org website to obtain per game statistics for teams and players of the top 100 in Valve Regional Standings (VRS).
 
-## Challenges:
-  - hltv uses JS to display the websites  
-      => Using Selenium to interact with the website  
-      => Bottleneck in opening URLs  
+## Features:
+  - Scraping pipeline based on Selenium (Handling JS Websites) for websites including:
+      - www.hltv.org/valve-ranking/teams/
+      - www.hltv.org/results/
+      - www.hltv.org/matches/*
         
-  - hltv uses cloudflare  
-    => Avoiding Captcha checks
+  - Export in PostgreSQL Database
+  - Automatic scraping and db insertion pipeline
+
+## Install:
+```bash
+git clone
+cd hltv_scraper
+pip install -r requirements.txt
+```
 
 ## TODO:
   - Scraper for VRS Ranking ✅
@@ -24,3 +32,8 @@ Small project to extract data from the hltv.org website to help building better 
     => creating new table for match information, like event and date 
 
 
+## Database Desing Sample:
+
+You can preview a sample of the scraped data directly on GitHub:
+
+➡️ [data/database_sample/*](data/database_sample/*)
