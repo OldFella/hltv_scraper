@@ -10,12 +10,33 @@ Project to scrape data from the hltv.org website to obtain per game statistics f
         
   - Export in PostgreSQL Database
   - Automatic scraping and db insertion pipeline
+  - Export basic spreadsheet 
 
 ## Install:
 ```bash
-git clone
+git clone https://github.com/OldFella/hltv_scraper.git
 cd hltv_scraper
 pip install -r requirements.txt
+```
+
+## Usage:
+
+- Get current team rankings:
+
+```bash
+python src/scripts/scrape_teams.py
+```
+
+- Get latest results:
+
+```bash
+python src/scripts/scrape_results.py
+```
+
+- Update database:
+
+```bash
+python src/db_handling/scrape_db.py
 ```
 
 ## TODO:
@@ -27,7 +48,7 @@ pip install -r requirements.txt
   - Create queries to create a spreadsheet (in progress)
 
 
-## Database Desing Sample:
+## Database Design Sample:
 
 You can preview a sample of the scraped data directly on GitHub:
 
