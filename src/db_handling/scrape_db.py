@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import os
 import shutil
+from datetime import datetime
 
 import sys
 sys.path.append('../')
@@ -57,9 +58,7 @@ def rearrange_data(dbw, dir):
 
 
 
-
 def rearrange_col(df,df_ids, on):
-    print(df.head(), df_ids.head(), on)
     df = df.join(df_ids.set_index(on), on = on)
     df = df.dropna()
     df.drop(columns = [on], axis = 1, inplace = True)
@@ -79,23 +78,28 @@ def remove_duplicates(file, dir, dbw, table):
 
 def main(n_workers, dir):
 
-    tmp_id = random_N_digits(10)
+    tmp_id = datetime.today().strftime('%Y-%m-%d')
 
     tmp_folder = 'tmp_' + str(tmp_id)
+    tmp_folder = "".join([dir, tmp_folder])
     
 
-    while os.path.exists(tmp_folder):
-        tmp_id = random_N_digits(10)
-        tmp_folder = 'tmp_' + str(tmp_id)
+    # Create folder structure
+    if not os.path.exists(tmp_folder):
+        os.mkdir(tmp_folder)
+
+    teams_ranking = f"{tmp_folder}/team_rankings/"
+    if not os.path.exists(teams_ranking):
+            os.mkdir(teams_ranking)
+    
+    data_folder = tmp_folder + '/data/'
+    if not os.path.exists(data_folder):
+        os.mkdir(data_folder)
+
 
     dbw = db_writer()
 
-    teams_ranking = f"{dir}team_rankings/"
-    ts = team_scraper(dir = teams_ranking)
-
-    os.mkdir(tmp_folder)
-    data_folder = tmp_folder + '/data/'
-    os.mkdir(data_folder)
+    ts = team_scraper(dir = teams_ranking) 
 
     FLAG_ISDONE = False
     page = 0
@@ -119,20 +123,24 @@ def main(n_workers, dir):
     teams.to_csv(f'{data_folder}teams.csv',index = False)
 
     n_workers = min(n_workers, len(matches))
-    sm.main(n_workers = n_workers,f_matches = f_matches, result_path = data_folder)
-    rearrange_data(dbw, data_folder)
+    
+    new_data_flag = sm.main(n_workers = n_workers,f_matches = f_matches, result_path = data_folder)
 
-    tables = ['player_stats', 'matches', 'players', 'teams']
+    if new_data_flag:
 
-    for table in tables:
-        if table not in ['player_stats', 'matches']:
-            df = remove_duplicates(f'{table}.csv', data_folder, dbw,table)
-        else:
-            df = pd.read_csv(f'{data_folder}{table}.csv')
-        df = df.rename(str.lower, axis ='columns')
+        rearrange_data(dbw, data_folder)
 
-        if not df.empty:
-            dbw.insert(df, table)
+        tables = ['player_stats', 'matches', 'players', 'teams']
+
+        for table in tables:
+            if table not in ['player_stats', 'matches']:
+                df = remove_duplicates(f'{table}.csv', data_folder, dbw,table)
+            else:
+                df = pd.read_csv(f'{data_folder}{table}.csv')
+            df = df.rename(str.lower, axis ='columns')
+
+            if not df.empty:
+                dbw.insert(df, table)
 
     # shutil.rmtree(tmp_folder)
 
@@ -142,7 +150,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--n_workers','-n', type = int, default = 4)
-    parser.add_argument('--dir', '-d', type = str, default = '../../data/')
+    parser.add_argument('--dir', '-d', type = str, default = '../../data/temp/')
     args = parser.parse_args()
 
     

@@ -49,7 +49,8 @@ def main(n_workers, f_matches = 'data/matches/matches.csv', result_path = 'data/
     m_todo = m_todo[~m_todo['matchID'].isin(ids_in_db)]
 
     m_todo.to_csv(f'{result_path}matches_todo.csv',index=False)
-    
+    if len(m_todo) == 0:
+        return False
     if not os.path.exists(f'{result_path}/matches.csv'):
         db_matches = pd.DataFrame()
     else:
@@ -111,6 +112,7 @@ def main(n_workers, f_matches = 'data/matches/matches.csv', result_path = 'data/
 
 
         it += 1
+    return True
 
         
         

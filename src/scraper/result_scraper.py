@@ -93,6 +93,6 @@ class result_scraper:
         curr_ranking = sorted(rankings)[0]
         df = pd.read_csv(f'{self.teams_path}{curr_ranking}')
         if n != -1:
-            self.teams = df['team_name'][:n]
+            self.teams = df['name'][:n]
         else:
-            self.teams = df['team_name']
+            self.teams = df['name']
