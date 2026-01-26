@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 - create table using:
 
-[create_tables.sql](create_database/create_tables.sql)
+    [create_tables.sql](create_database/create_tables.sql)
 
 
 ## Usage:
