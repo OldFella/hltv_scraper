@@ -1,6 +1,6 @@
 # HLTV Scraper
 
-Project to scrape data from the hltv.org website to obtain per game statistics for teams and players of the top 100 in Valve Regional Standings (VRS).
+Project to scrape data from hltv.org. The hltv website provides information about all things Counter Strike 2 e-sports. Unfortunalty, they do not provide an api to simply obtain data about the competitive matches, as well as a fantasy league. This project aims to automatically scrape all game statistics for teams and players of the top 100 in Valve Regional Standings (VRS). Ultimately, the data will be used to make a prediction for the best draftable teams.
 
 ## Features:
   - Scraping pipeline based on Selenium (Handling JS Websites) for websites including:
