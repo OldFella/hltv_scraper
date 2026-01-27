@@ -13,10 +13,11 @@ select * from ( select  p.playerid,
                                 join players pl 
                                 on pn.playerid = pl.playerid
                                 where pl.playerid in (select playerid from fantasies where fantasyid = {{fantasyid}}))
-                    and ps.mapid = 0 
-                    and ps.sideid = 0
+                    and ps.mapid = 0
+                    and ps.sideid = 0 
                     and m.date  between CAST('{{start_date}}' as date) - INTERVAL '{{months}} months'
                                 and CAST('{{start_date}}' as date)
+                    and m.teamid in (select teamid from fantasies where fantasyid = 591)
                 group by p.playerid) as stat
 union all
 select  p.playerid,

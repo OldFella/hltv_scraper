@@ -127,6 +127,16 @@ class db_reader(db_handler):
         _TEMPLATE_ = f'{self.query_dir}get_average_ratings_fantasy_vs.sql'
         return self.query(_TEMPLATE_, params)
     
+    def get_average_ratings_fantasy_event(self, fantasyid, start_date = 0, months = 3):
+        if start_date ==0:
+            start_date = datetime.date.today()
+        params = {'fantasyid':fantasyid,
+                  'start_date': start_date,
+                  'months': months}
+        _TEMPLATE_ = f'{self.query_dir}get_average_ratings_fantasy_event.sql'
+        return self.query(_TEMPLATE_, params)
+
+
     def get_average_ratings_fantasy(self, fantasyid, start_date = 0, months = 3):
         if start_date ==0:
             start_date = datetime.date.today()
@@ -135,6 +145,28 @@ class db_reader(db_handler):
                   'months': months}
         _TEMPLATE_ = f'{self.query_dir}get_average_ratings_fantasy.sql'
         return self.query(_TEMPLATE_, params)
+
+    def get_winrate(self, teamid, mapid, start_date = 0, months = 3):
+        if start_date ==0:
+            start_date = datetime.date.today()
+        params = {'teamid':teamid,
+                  'mapid': mapid,
+                  'start_date': start_date,
+                  'months': months}
+        _TEMPLATE_ = f'{self.query_dir}get_winrate.sql'
+        return self.query(_TEMPLATE_, params)
+    
+    def get_winrate_h2h(self,teamid ,opponentid,mapid, start_date = 0, months = 3):
+        if start_date ==0:
+            start_date = datetime.date.today()
+        params = {'teamid':teamid,
+                  'opponentid': opponentid,
+                  'mapid': mapid,
+                  'start_date': start_date,
+                  'months': months}
+        _TEMPLATE_ = f'{self.query_dir}get_winrate_h2h.sql'
+        return self.query(_TEMPLATE_, params)
+    
     
 class db_writer(db_reader):
 

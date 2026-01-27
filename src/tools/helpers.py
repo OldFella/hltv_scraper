@@ -1,5 +1,16 @@
 import pandas as pd
-import os
+import numpy as np
+
+
+def rating_to_points(rating):
+    """
+    Calculates the given rating to the corresponding amount of fantasy points.
+    For odd numbers the websites rounds up or down based on more than two 
+    floating points, which the website does not provide.
+    """
+
+    rating = np.multiply(np.subtract(rating,1),50)
+    return rating
 
 def create_ids(values,name):
     df = pd.DataFrame(columns=[f'{name}ID', 'name'])
@@ -45,8 +56,3 @@ def check_faulty_entries():
     table.to_csv('../data/database/player_stats.csv', index=False)
 
     # print(df[df['check']!= 0])
-
-# print(check_faulty_entries())
-check_stats('../data/database/matches.csv', '../data/database/player_stats.csv')
-# print(create_map_ids('../data/database/matches.csv'))
-# print(create_team_ids('../data/database/matches.csv'))
