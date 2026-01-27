@@ -32,6 +32,8 @@ class match_scraper:
         to_replace = ['<','/','>', 'span', 'class=', '"'," "]
         for e in map_rounds:
             text = e.get_attribute('innerHTML')
+            if text == '':
+                continue
             for r in to_replace:
                 text = text.replace(r,"")
             rounds_won.append(text)
@@ -50,7 +52,6 @@ class match_scraper:
     def get_stats(self,data,row):
 
         for match_id,date,maps, players,rounds_won in data:
-            # print(maps)
             d = self.get_date(date)
 
             m = self.get_maps(maps)

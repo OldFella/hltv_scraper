@@ -114,8 +114,6 @@ def main(n_workers, dir, config):
     
     f_matches = f'{tmp_folder}/matches.csv'
     matches.to_csv(f_matches, index = False)
-    print(matches)
-
     teams = ts.teams
     teams.drop(columns = ['points'], axis = 1 ,inplace= True)
     teams.to_csv(f'{data_folder}teams.csv',index = False)
@@ -147,7 +145,7 @@ def main(n_workers, dir, config):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--n_workers','-n', type = int, default = 4)
+    parser.add_argument('--n_workers','-n', type = int, default = 2)
     parser.add_argument('--dir', '-d', type = str, default = '../data/temp/')
     parser.add_argument('--config', '-c', type=str, default = 'db_handling/database.ini')
     args = parser.parse_args()
