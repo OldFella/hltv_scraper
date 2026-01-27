@@ -4,6 +4,8 @@ import pandas as pd
 
 from tools.helpers import rating_to_points
 from db_handling.db_handler import db_reader
+import argparse
+import os
 
 
 def dfs_tabs(df_list, sheet_list, file_name):
@@ -52,7 +54,8 @@ def add_metrics(spreadsheet):
     return spreadsheet
     
 
-def main(fantasyid):
+def main(fantasyid, output):
+
     dbr = db_reader(filename='../db_handling/database.ini', query_dir = '../db_handling/queries/')
     fantasy = dbr.get_table('fantasies')
     fantasy = fantasy[fantasy['fantasyid'] == fantasyid]
@@ -97,7 +100,16 @@ def main(fantasyid):
     sheets = [spreadsheet, team_h2h, player_h2h]
     sheet_names = ['main', 'h2h_teams', 'h2h_players']    
 
-    dfs_tabs(sheets, sheet_names, 'out.ods')
+    fantasy_name = dbr.get_name('fantasy_overview', 'fantasyid', fantasyid)
+    dir = f'{fantasy_name}/'
+
+    os.mkdir(dir)
+    dfs_tabs(sheets, sheet_names, f'{dir}{output}')
 
 if __name__ == '__main__':
-    main(591)
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--fantasyid','-f', type = int, default = 591)
+    parser.add_argument('--output', '-o', type =str, default = 'out.ods')
+    args = parser.parse_args()
+    main(args.fantasyid, args.output)

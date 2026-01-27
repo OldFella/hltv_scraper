@@ -1,9 +1,12 @@
-from db_handler import db_writer
 import pandas as pd
 import numpy as np
 import os
 import shutil
 import argparse
+import sys
+sys.path.append('../')
+from db_handling.db_handler import db_writer
+
 
 
 def open_fantasy(file):
@@ -44,9 +47,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--input','-i', type = str, default = "")
+    parser.add_argument('--config', '-c', type =str, default = '../db_handling/database.ini')
     args = parser.parse_args()
 
-    dbw = db_writer()
+    dbw = db_writer(filename=args.config)
 
     df = open_fantasy(args.input)
 
