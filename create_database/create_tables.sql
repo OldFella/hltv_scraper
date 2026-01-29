@@ -1,32 +1,28 @@
 CREATE TABLE players (
-    playerid INT,
+    playerid INT PRIMARY KEY,
     name varchar(255)
-    PRIMARY KEY (playerid)
 );
 
 CREATE TABLE teams (
-    teamid INT,
+    teamid INT PRIMARY KEY,
     name varchar(255)
-    PRIMARY KEY (teamid)
 );
 
 CREATE TABLE maps (
-    mapid INT,
+    mapid INT PRIMARY KEY,
     name varchar(255)
-    PRIMARY KEY (mapid)
 );
 
 CREATE TABLE sides (
-    sideid INT,
+    sideid INT PRIMARY KEY,
     name varchar(255)
-    PRIMARY KEY (sideid)
 );
 
 CREATE TABLE matches (
     matchid INT,
     teamid INT REFERENCES teams (teamid),
     mapid INT REFERENCES maps (mapid),
-    sideid INT REFERENCES side (sideid),
+    sideid INT REFERENCES sides (sideid),
     score INT,
     date date,
     PRIMARY KEY (matchid, teamid, mapid,sideid)
@@ -37,7 +33,7 @@ CREATE TABLE player_stats (
     playerid INT REFERENCES players (playerid),
     teamid INT REFERENCES teams (teamid),
     mapid INT REFERENCES maps (mapid),
-    sideid INT REFERENCES side (sideid),
+    sideid INT REFERENCES sides (sideid),
     k INT,
     d INT,
     ek INT,
@@ -45,6 +41,7 @@ CREATE TABLE player_stats (
     roundswing FLOAT,
     adr FLOAT,
     eadr FLOAT,
+    kast FLOAT,
     ekast FLOAT,
     rating FLOAT,
     PRIMARY KEY (matchid,playerid ,teamid, mapid,sideid)
@@ -52,9 +49,8 @@ CREATE TABLE player_stats (
 
 
 CREATE TABLE fantasy_overview(
-    fantasyid INT,
-    name VARCHAR(255),
-    PRIMARY KEY (fantasyid)
+    fantasyid INT PRIMARY KEY,
+    name VARCHAR(255)
 );
 
 CREATE TABLE fantasies (

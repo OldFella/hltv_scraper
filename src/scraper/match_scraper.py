@@ -32,6 +32,7 @@ class match_scraper:
         to_replace = ['<','/','>', 'span', 'class=', '"'," "]
         for e in map_rounds:
             text = e.get_attribute('innerHTML')
+            # Check for map forfeits
             if text == '':
                 continue
             for r in to_replace:
