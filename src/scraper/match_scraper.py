@@ -4,11 +4,11 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 import pandas as pd
 from datetime import datetime
+from scraper.scraper_base import scraper_base
 
-class match_scraper:
+class match_scraper(scraper_base):
     def __init__(self):
-        self.options = Options()
-        self.options.add_argument("--headless")
+        super().__init__()
         self.match_src_path = "data/match_src/"
         self.player_stats = pd.DataFrame(columns=['matchID', 'playerID','team',
                                                   'map', 'side', 'k','d','ek',
@@ -20,7 +20,6 @@ class match_scraper:
 
     def open_match(self, row):
         url = row['url']
-
         pattern_match_id = r'matches/([^"]*)/'
         match_id = re.findall(pattern_match_id,url)
         driver = webdriver.Firefox(options=self.options)

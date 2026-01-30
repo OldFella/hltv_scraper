@@ -73,7 +73,11 @@ def main(n_workers, f_matches = 'data/matches/matches.csv', result_path = 'data/
         m_todo = pd.read_csv(f'{result_path}matches_todo.csv')
 
         print(f'{len(m_todo)} still to go...',end = '\r')
-        mp_results = multiprocessing(match_scraping, n_workers, result_path)
+        mp_results = []
+        if n_workers == 1:
+            mp_results.append(match_scraping(result_path))
+        else:
+            mp_results = multiprocessing(match_scraping, n_workers, result_path)
         results = []
         for res in mp_results:
             try:

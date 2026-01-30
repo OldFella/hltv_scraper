@@ -6,13 +6,15 @@ import pandas as pd
 from datetime import datetime
 import os
 import numpy as np
+from scraper.scraper_base import scraper_base
 
 
-class result_scraper:
+class result_scraper(scraper_base):
     """
     Opens hltv.org/results and saves relevant matches
     """
     def __init__(self,page=0, url="https://www.hltv.org/results", top = 100,teams_path = "./data/team_rankings/" ,dir = './data/matches/'):
+        super().__init__()
         self.page = page
         self.url = url
         self.top = top
@@ -28,11 +30,6 @@ class result_scraper:
         if os.path.exists(f"{self.dir}matches.csv"):
             self.results_table = pd.read_csv(f"{self.dir}matches.csv")
         self.results = pd.DataFrame(columns=['matchID', 'team1', 'score1', 'team2','score2','event' ,'url'])
-
-        proxy = "20.235.159.154:80"
-        self.options = Options()
-        self.options.add_argument(f"--proxy-server={proxy}")
-        self.options.add_argument("--headless")
 
         self.get_teams(n = self.top)
         self.open_results()
