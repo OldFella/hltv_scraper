@@ -1,0 +1,22 @@
+services:
+  scraper:
+    build: ../src
+    container_name: hltv_scraper
+    restart: "no"
+
+    environment:
+      DB_HOST: db
+      DB_PORT: 5433
+      DB_NAME: hltv
+      DB_USER: user_write
+      DB_PASSWORD: writerpass
+
+    networks:
+      - internal
+    
+    volumes:
+      - ../src/data:/app/data
+
+networks:
+  internal:
+    external: true

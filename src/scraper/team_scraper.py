@@ -5,17 +5,18 @@ from selenium.webdriver.common.by import By
 import pandas as pd
 from datetime import datetime
 import os
+from scraper.scraper_base import scraper_base
 
 
-class team_scraper:
+
+class team_scraper(scraper_base):
     """
     Scrapes current hltv valve rankings
     """
-    def __init__(self, url = "https://www.hltv.org/valve-ranking/teams/", dir = "../data/team_rankings/"):
+    def __init__(self, url = "https://www.hltv.org/valve-ranking/teams/", dir = "data/team_rankings/"):
+        super().__init__()
         self.website = url
 
-        self.options = Options()
-        self.options.add_argument("--headless")
 
         self.teams = pd.DataFrame(columns=['name', 'points', 'teamID'])
         self.team_data = []
@@ -25,17 +26,16 @@ class team_scraper:
         self.dir = dir
 
         # only scrape if it does not already exist:
-
         if f'{self.time}.csv' in os.listdir(self.dir):
             self.teams = pd.read_csv(f'{self.dir}{self.time}.csv')
         
 
         else:
-            print("open website...", end='\r')
+            print("open website...")
             self.open_rankings()
-            print("get rankings...", end='\r')
+            print("get rankings...")
             self.get_rankings()
-            print("save...", end='\r')
+            print("save...")
             self.write_teams()
 
 

@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:16
+    container_name: hltv_db
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: hltv
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: superuser_password
+
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+
+    networks:
+      - internal
+
+volumes:
+  db_data:
+
+networks:
+  internal:
+    name: internal
+    driver: bridge
+    attachable: true

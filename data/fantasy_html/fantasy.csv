@@ -1,41 +1,81 @@
-fantasyID,title,team,player,cost
-589,BLAST Bounty 2026 Season 1 - Finals,Vitality,apEX,190
-589,BLAST Bounty 2026 Season 1 - Finals,Vitality,ropz,227
-589,BLAST Bounty 2026 Season 1 - Finals,Vitality,ZywOo,236
-589,BLAST Bounty 2026 Season 1 - Finals,Vitality,flameZ,218
-589,BLAST Bounty 2026 Season 1 - Finals,Vitality,mezii,211
-589,BLAST Bounty 2026 Season 1 - Finals,FURIA,FalleN,186
-589,BLAST Bounty 2026 Season 1 - Finals,FURIA,yuurih,209
-589,BLAST Bounty 2026 Season 1 - Finals,FURIA,YEKINDAR,210
-589,BLAST Bounty 2026 Season 1 - Finals,FURIA,KSCERATO,223
-589,BLAST Bounty 2026 Season 1 - Finals,FURIA,molodoy,221
-589,BLAST Bounty 2026 Season 1 - Finals,Falcons,NiKo,203
-589,BLAST Bounty 2026 Season 1 - Finals,Falcons,TeSeS,190
-589,BLAST Bounty 2026 Season 1 - Finals,Falcons,m0NESY,225
-589,BLAST Bounty 2026 Season 1 - Finals,Falcons,kyxsan,184
-589,BLAST Bounty 2026 Season 1 - Finals,Falcons,NucleonZ,185
-589,BLAST Bounty 2026 Season 1 - Finals,Spirit,sh1ro,215
-589,BLAST Bounty 2026 Season 1 - Finals,Spirit,magixx,187
-589,BLAST Bounty 2026 Season 1 - Finals,Spirit,tN1R,207
-589,BLAST Bounty 2026 Season 1 - Finals,Spirit,zont1x,189
-589,BLAST Bounty 2026 Season 1 - Finals,Spirit,donk,235
-589,BLAST Bounty 2026 Season 1 - Finals,Liquid,NAF,196
-589,BLAST Bounty 2026 Season 1 - Finals,Liquid,EliGE,191
-589,BLAST Bounty 2026 Season 1 - Finals,Liquid,NertZ,189
-589,BLAST Bounty 2026 Season 1 - Finals,Liquid,siuhy,176
-589,BLAST Bounty 2026 Season 1 - Finals,Liquid,ultimate,186
-589,BLAST Bounty 2026 Season 1 - Finals,PARIVISION,Jame,182
-589,BLAST Bounty 2026 Season 1 - Finals,PARIVISION,BELCHONOKK,178
-589,BLAST Bounty 2026 Season 1 - Finals,PARIVISION,xiELO,194
-589,BLAST Bounty 2026 Season 1 - Finals,PARIVISION,nota,193
-589,BLAST Bounty 2026 Season 1 - Finals,PARIVISION,zweih,199
-589,BLAST Bounty 2026 Season 1 - Finals,GamerLegion,Snax,170
-589,BLAST Bounty 2026 Season 1 - Finals,GamerLegion,REZ,189
-589,BLAST Bounty 2026 Season 1 - Finals,GamerLegion,Tauson,191
-589,BLAST Bounty 2026 Season 1 - Finals,GamerLegion,PR,195
-589,BLAST Bounty 2026 Season 1 - Finals,GamerLegion,hypex,175
-589,BLAST Bounty 2026 Season 1 - Finals,HEROIC,xfl0ud,188
-589,BLAST Bounty 2026 Season 1 - Finals,HEROIC,nilo,185
-589,BLAST Bounty 2026 Season 1 - Finals,HEROIC,susp,184
-589,BLAST Bounty 2026 Season 1 - Finals,HEROIC,Chr1zN,173
-589,BLAST Bounty 2026 Season 1 - Finals,HEROIC,yxngstxr,181
+fantasyID,title,team,playerid,cost
+594,IEM Krakow 2026 - Stage 2,Vitality,7322,190
+594,IEM Krakow 2026 - Stage 2,Vitality,11816,225
+594,IEM Krakow 2026 - Stage 2,Vitality,11893,235
+594,IEM Krakow 2026 - Stage 2,Vitality,16693,217
+594,IEM Krakow 2026 - Stage 2,Vitality,18462,209
+594,IEM Krakow 2026 - Stage 2,FURIA,2023,191
+594,IEM Krakow 2026 - Stage 2,FURIA,12553,210
+594,IEM Krakow 2026 - Stage 2,FURIA,13915,212
+594,IEM Krakow 2026 - Stage 2,FURIA,15631,224
+594,IEM Krakow 2026 - Stage 2,FURIA,24144,222
+594,IEM Krakow 2026 - Stage 2,Falcons,3741,207
+594,IEM Krakow 2026 - Stage 2,Falcons,12018,194
+594,IEM Krakow 2026 - Stage 2,Falcons,19230,230
+594,IEM Krakow 2026 - Stage 2,Falcons,19677,192
+594,IEM Krakow 2026 - Stage 2,Falcons,24177,215
+594,IEM Krakow 2026 - Stage 2,MOUZ,13666,186
+594,IEM Krakow 2026 - Stage 2,MOUZ,18072,203
+594,IEM Krakow 2026 - Stage 2,MOUZ,18221,216
+594,IEM Krakow 2026 - Stage 2,MOUZ,18850,201
+594,IEM Krakow 2026 - Stage 2,MOUZ,20312,218
+594,IEM Krakow 2026 - Stage 2,FaZe,429,178
+594,IEM Krakow 2026 - Stage 2,FaZe,9960,213
+594,IEM Krakow 2026 - Stage 2,FaZe,10394,215
+594,IEM Krakow 2026 - Stage 2,FaZe,18053,194
+594,IEM Krakow 2026 - Stage 2,FaZe,22383,192
+594,IEM Krakow 2026 - Stage 2,PARIVISION,13776,197
+594,IEM Krakow 2026 - Stage 2,PARIVISION,19235,189
+594,IEM Krakow 2026 - Stage 2,PARIVISION,22471,206
+594,IEM Krakow 2026 - Stage 2,PARIVISION,22929,204
+594,IEM Krakow 2026 - Stage 2,PARIVISION,23685,203
+594,IEM Krakow 2026 - Stage 2,Natus Vincere,9816,177
+594,IEM Krakow 2026 - Stage 2,Natus Vincere,14759,199
+594,IEM Krakow 2026 - Stage 2,Natus Vincere,18987,202
+594,IEM Krakow 2026 - Stage 2,Natus Vincere,20127,205
+594,IEM Krakow 2026 - Stage 2,Natus Vincere,22673,198
+594,IEM Krakow 2026 - Stage 2,Spirit,16920,219
+594,IEM Krakow 2026 - Stage 2,Spirit,18317,195
+594,IEM Krakow 2026 - Stage 2,Spirit,19808,199
+594,IEM Krakow 2026 - Stage 2,Spirit,20423,184
+594,IEM Krakow 2026 - Stage 2,Spirit,21167,235
+594,IEM Krakow 2026 - Stage 2,The MongolZ,20194,181
+594,IEM Krakow 2026 - Stage 2,The MongolZ,20275,180
+594,IEM Krakow 2026 - Stage 2,The MongolZ,21001,197
+594,IEM Krakow 2026 - Stage 2,The MongolZ,21809,195
+594,IEM Krakow 2026 - Stage 2,The MongolZ,23402,187
+594,IEM Krakow 2026 - Stage 2,G2,3972,184
+594,IEM Krakow 2026 - Stage 2,G2,11617,195
+594,IEM Krakow 2026 - Stage 2,G2,19164,185
+594,IEM Krakow 2026 - Stage 2,G2,20447,197
+594,IEM Krakow 2026 - Stage 2,G2,21062,193
+594,IEM Krakow 2026 - Stage 2,3DMAX,8374,183
+594,IEM Krakow 2026 - Stage 2,3DMAX,13138,189
+594,IEM Krakow 2026 - Stage 2,3DMAX,13497,188
+594,IEM Krakow 2026 - Stage 2,3DMAX,19739,181
+594,IEM Krakow 2026 - Stage 2,3DMAX,21969,179
+594,IEM Krakow 2026 - Stage 2,Aurora,150,170
+594,IEM Krakow 2026 - Stage 2,Aurora,7938,210
+594,IEM Krakow 2026 - Stage 2,Aurora,8574,195
+594,IEM Krakow 2026 - Stage 2,Aurora,20968,192
+594,IEM Krakow 2026 - Stage 2,Aurora,21243,203
+594,IEM Krakow 2026 - Stage 2,Astralis,10096,168
+594,IEM Krakow 2026 - Stage 2,Astralis,16726,192
+594,IEM Krakow 2026 - Stage 2,Astralis,17956,184
+594,IEM Krakow 2026 - Stage 2,Astralis,20304,189
+594,IEM Krakow 2026 - Stage 2,Astralis,21217,194
+594,IEM Krakow 2026 - Stage 2,FUT,20584,187
+594,IEM Krakow 2026 - Stage 2,FUT,20761,182
+594,IEM Krakow 2026 - Stage 2,FUT,22203,179
+594,IEM Krakow 2026 - Stage 2,FUT,22674,177
+594,IEM Krakow 2026 - Stage 2,FUT,23553,185
+594,IEM Krakow 2026 - Stage 2,NRG,7687,170
+594,IEM Krakow 2026 - Stage 2,NRG,8711,177
+594,IEM Krakow 2026 - Stage 2,NRG,13249,182
+594,IEM Krakow 2026 - Stage 2,NRG,16717,183
+594,IEM Krakow 2026 - Stage 2,NRG,20333,175
+594,IEM Krakow 2026 - Stage 2,BC.Game,630,175
+594,IEM Krakow 2026 - Stage 2,BC.Game,7998,195
+594,IEM Krakow 2026 - Stage 2,BC.Game,8918,180
+594,IEM Krakow 2026 - Stage 2,BC.Game,22807,181
+594,IEM Krakow 2026 - Stage 2,BC.Game,23140,182

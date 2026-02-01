@@ -181,5 +181,7 @@ class db_writer(db_reader):
         df.to_csv(buffer, index = False, header = False)
         buffer.seek(0)
         query = f'COPY {table} FROM STDIN WITH CSV'
+        print('copy...')
         self.cur.copy_expert(query, buffer)
+        print('commit...')
         self.con.commit()

@@ -71,8 +71,10 @@ def main(n_workers, f_matches = 'data/matches/matches.csv', result_path = 'data/
     it = 0
     while len(m_todo) > 0:
         m_todo = pd.read_csv(f'{result_path}matches_todo.csv')
+        if len(m_todo) == 0:
+            break
 
-        print(f'{len(m_todo)} still to go...',end = '\r')
+        print(f'{len(m_todo)} still to go...')
         mp_results = []
         if n_workers == 1:
             mp_results.append(match_scraping(result_path))
@@ -81,7 +83,10 @@ def main(n_workers, f_matches = 'data/matches/matches.csv', result_path = 'data/
         results = []
         for res in mp_results:
             try:
-                results.append(res.result())
+                if n_workers != 1:
+                    results.append(res.result())
+                else:
+                    results = mp_results
             except Exception as e:
                 print(e)
 
@@ -92,7 +97,6 @@ def main(n_workers, f_matches = 'data/matches/matches.csv', result_path = 'data/
             else:
                 db_player_stats = pd.concat([db_player_stats, player_stats])
             db_player_stats.to_csv(f'{result_path}player_stats.csv',index=False)
-
             if db_players.empty:
                 db_players = players
             else:
@@ -113,6 +117,7 @@ def main(n_workers, f_matches = 'data/matches/matches.csv', result_path = 'data/
                 db_players.to_csv(f'{result_path}backup/players{it}.csv',index=False)
                 db_matches.to_csv(f'{result_path}backup/matches{it}.csv',index=False)
         c = gc.collect()
+        return True
 
 
         it += 1

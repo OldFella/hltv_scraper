@@ -1,13 +1,13 @@
-from db_handling.db_handler import db_writer
+from src.db_handling.db_handler import db_writer
 import pandas as pd
 import numpy as np
 import os
 import shutil
 from datetime import datetime
 
-from scraper.result_scraper import result_scraper
-import scripts.scrape_matches as sm
-from scraper.team_scraper import team_scraper
+from src.scraper.result_scraper import result_scraper
+import src.scripts.scrape_matches as sm
+from src.scraper.team_scraper import team_scraper
 import argparse
 
 def get_results(page = 0,top = 100, dir = '', teams_path = ''):
@@ -40,7 +40,6 @@ def rearrange_data(dbw, dir):
 
     player_stats = pd.read_csv(f'{dir}player_stats.csv')
     player_stats = player_stats.rename(str.lower, axis='columns')
-
     matches = pd.read_csv(f'{dir}matches.csv')
     matches = matches.rename(str.lower, axis='columns')
 
@@ -59,7 +58,7 @@ def rearrange_data(dbw, dir):
 def rearrange_col(df,df_ids, on):
     df = df.join(df_ids.set_index(on), on = on)
     df = df.dropna()
-    df.drop(columns = [on], inplace = True)
+    df.drop(columns = [on], axis = 1, inplace = True)
     return df
 
 
@@ -69,11 +68,12 @@ def remove_duplicates(file, dir, dbw, table):
     ids = [id for id in ids if 'id' in id.lower()]
     table_id = [id for id in ids if table.replace('s', '') in id][0]
     db_ids = dbw.get_ids(table, table_id.lower())
+
     df = df[~df[table_id].isin(db_ids)]
     return df
 
 
-def main(n_workers, dir, config, max_pages = 1):
+def main(n_workers, dir, config):
 
     tmp_id = datetime.today().strftime('%Y-%m-%d')
 
@@ -93,22 +93,21 @@ def main(n_workers, dir, config, max_pages = 1):
     if not os.path.exists(data_folder):
         os.mkdir(data_folder)
 
+
     dbw = db_writer(filename=config)
 
     ts = team_scraper(dir = teams_ranking) 
 
     FLAG_ISDONE = False
     page = 0
-    print('get results...')
     while not FLAG_ISDONE:
-        page += 1
         rs = get_results(page = page, dir = tmp_folder + '/', teams_path=teams_ranking)
         matches = get_matches(dbw, tmp_folder)
 
-        if len(rs.get_results()) != len(matches) or page >= max_pages:
+        if len(rs.get_results()) != len(matches):
             FLAG_ISDONE = True
         
-        
+        page += 1
 
     if len(matches) == 0:
         return
@@ -116,46 +115,41 @@ def main(n_workers, dir, config, max_pages = 1):
     f_matches = f'{tmp_folder}/matches.csv'
     matches.to_csv(f_matches, index = False)
     teams = ts.teams
-    teams.drop(columns = ['points'] ,inplace= True)
+    teams.drop(columns = ['points'], axis = 1 ,inplace= True)
     teams.to_csv(f'{data_folder}teams.csv',index = False)
 
     n_workers = min(n_workers, len(matches))
-    print('get matches...')
+    
     new_data_flag = sm.main(n_workers = n_workers,f_matches = f_matches, result_path = data_folder)
+    print(new_data_flag)
     if new_data_flag:
 
         rearrange_data(dbw, data_folder)
 
-        tables = ['players', 'teams','player_stats', 'matches']
+        tables = ['player_stats', 'matches', 'players', 'teams']
 
         for table in tables:
             if table not in ['player_stats', 'matches']:
                 df = remove_duplicates(f'{table}.csv', data_folder, dbw,table)
             else:
                 df = pd.read_csv(f'{data_folder}{table}.csv')
-            
-            # print(df)
             df = df.rename(str.lower, axis ='columns')
 
-            # print(df)
-
             if not df.empty:
-                df = df.drop_duplicates()
                 dbw.insert(df, table)
 
-    #shutil.rmtree(tmp_folder)
+    # shutil.rmtree(tmp_folder)
 
     
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--n_workers','-n', type = int, default = 1)
+    parser.add_argument('--n_workers','-n', type = int, default = 2)
     parser.add_argument('--dir', '-d', type = str, default = 'data/temp/')
-    parser.add_argument('--config', '-c', type=str, default = 'database.ini')
+    parser.add_argument('--config', '-c', type=str, default = 'src/db_handling/database.ini')
     args = parser.parse_args()
 
-    print('start...')
     
     main(n_workers = args.n_workers, dir = args.dir, config = args.config)
 
