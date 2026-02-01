@@ -15,8 +15,16 @@ Project to scrape data from hltv.org. The hltv website provides information abou
 ## Install:
 ```bash
 git clone https://github.com/OldFella/hltv_scraper.git
-cd hltv_scraper
-pip install -r requirements.txt
+cd hltv_scraper/docker/
+```
+- Change Passwords in:
+  - `hltv_scraper/docker/compose.psql.yaml`
+  - `hltv_scraper/docker/db/init/init_psql.sql`
+  - `hltv_scraper/src/database.ini`
+
+```bash
+docker compose -f compose.psql.yaml up -d
+docker compose -f compose.scraper.yaml up
 ```
 
 ## Create Database:
