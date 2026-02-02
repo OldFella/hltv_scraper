@@ -105,7 +105,7 @@ def main(n_workers, dir, config, max_pages = 1):
         rs = get_results(page = page, dir = tmp_folder + '/', teams_path=teams_ranking)
         matches = get_matches(dbw, tmp_folder)
 
-        if len(rs.get_results()) != len(matches) or page >= max_pages:
+        if page >= max_pages:# or len(rs.get_results()) != len(matches):
             FLAG_ISDONE = True
         
         
@@ -134,29 +134,28 @@ def main(n_workers, dir, config, max_pages = 1):
             else:
                 df = pd.read_csv(f'{data_folder}{table}.csv')
             
-            # print(df)
             df = df.rename(str.lower, axis ='columns')
-
-            # print(df)
 
             if not df.empty:
                 df = df.drop_duplicates()
                 dbw.insert(df, table)
 
-    #shutil.rmtree(tmp_folder)
+    shutil.rmtree(tmp_folder)
 
     
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--n_workers','-n', type = int, default = 1)
+    parser.add_argument('--n_workers','-n', type = int, default = 4)
     parser.add_argument('--dir', '-d', type = str, default = 'data/temp/')
     parser.add_argument('--config', '-c', type=str, default = 'database.ini')
+    parser.add_argument('--max_pages','-max', type = int, default = 5)
+
     args = parser.parse_args()
 
     print('start...')
     
-    main(n_workers = args.n_workers, dir = args.dir, config = args.config)
+    main(n_workers = args.n_workers, dir = args.dir, config = args.config, max_pages=args.max_pages)
 
 

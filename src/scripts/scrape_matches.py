@@ -117,7 +117,6 @@ def main(n_workers, f_matches = 'data/matches/matches.csv', result_path = 'data/
                 db_players.to_csv(f'{result_path}backup/players{it}.csv',index=False)
                 db_matches.to_csv(f'{result_path}backup/matches{it}.csv',index=False)
         c = gc.collect()
-        return True
 
 
         it += 1

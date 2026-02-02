@@ -6,7 +6,6 @@ services:
 
     environment:
       DB_HOST: db
-      DB_PORT: 5433
       DB_NAME: hltv
       DB_USER: user_write
       DB_PASSWORD: writerpass

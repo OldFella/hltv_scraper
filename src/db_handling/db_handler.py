@@ -63,19 +63,19 @@ class db_reader(db_handler):
     def get_matchids(self):
         query = "SELECT DISTINCT matchid FROM matches;"
         mids = self.execute(query)
-        mids = np.array(mids).T.squeeze()
+        mids = np.array(mids).T.flatten()
         return mids
     
     def get_ids(self,table, id_name):
         query = f"SELECT DISTINCT {id_name} FROM {table}"
         ids = self.execute(query)
-        ids = np.array(ids).T.squeeze()
+        ids = np.array(ids).T.flatten()
         return ids
     
     def get_name(self, table, idname, id):
         query = f"SELECT name FROM {table} WHERE {idname} = {id}"
         name = self.execute(query)
-        name = np.array(name).T.squeeze()
+        name = np.array(name).T.flatten()
         return name
     
     def get_table(self, table):
