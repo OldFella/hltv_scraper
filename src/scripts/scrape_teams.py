@@ -1,5 +1,3 @@
-import sys
-sys.path.append('../')
 from scraper.team_scraper import team_scraper
 import argparse
 

@@ -73,14 +73,12 @@ def remove_duplicates(file, dir, dbw, table):
     return df
 
 
-def main(n_workers, dir, config, max_pages = 1):
-
+def make_dirs(dir):
     tmp_id = datetime.today().strftime('%Y-%m-%d')
 
     tmp_folder = 'tmp_' + str(tmp_id)
     tmp_folder = "".join([dir, tmp_folder])
     
-
     # Create folder structure
     if not os.path.exists(tmp_folder):
         os.mkdir(tmp_folder)
@@ -92,35 +90,28 @@ def main(n_workers, dir, config, max_pages = 1):
     data_folder = tmp_folder + '/data/'
     if not os.path.exists(data_folder):
         os.mkdir(data_folder)
-
-    dbw = db_writer(filename=config)
-
-    ts = team_scraper(dir = teams_ranking) 
-
-    FLAG_ISDONE = False
-    page = 0
-    print('get results...')
-    while not FLAG_ISDONE:
-        page += 1
-        rs = get_results(page = page, dir = tmp_folder + '/', teams_path=teams_ranking)
-        matches = get_matches(dbw, tmp_folder)
-
-        if page >= max_pages:# or len(rs.get_results()) != len(matches):
-            FLAG_ISDONE = True
-        
-        
-
-    if len(matches) == 0:
-        return
     
     f_matches = f'{tmp_folder}/matches.csv'
-    matches.to_csv(f_matches, index = False)
+    
+    return tmp_folder, teams_ranking, data_folder, f_matches
+
+def scrape_teams(teams_ranking, data_folder):
+    ts = team_scraper(dir = teams_ranking) 
     teams = ts.teams
     teams.drop(columns = ['points'] ,inplace= True)
     teams.to_csv(f'{data_folder}teams.csv',index = False)
 
+def scrape_results(dbw, tmp_folder, teams_ranking,f_matches ,max_pages):
+    for page in range(max_pages):
+        rs = get_results(page = page, dir = tmp_folder + '/', teams_path=teams_ranking)
+        matches = get_matches(dbw, tmp_folder)
+    
+    matches.to_csv(f_matches, index = False)
+
+    return matches
+
+def scrape_matches(matches, f_matches,data_folder, dbw, n_workers):
     n_workers = min(n_workers, len(matches))
-    print('get matches...')
     new_data_flag = sm.main(n_workers = n_workers,f_matches = f_matches, result_path = data_folder)
     if new_data_flag:
 
@@ -140,6 +131,27 @@ def main(n_workers, dir, config, max_pages = 1):
                 df = df.drop_duplicates()
                 dbw.insert(df, table)
 
+def main(n_workers, dir, config, max_pages = 1):
+
+    print('create folder structure...')
+    tmp_folder, teams_ranking, data_folder, f_matches = make_dirs(dir)
+
+    dbw = db_writer(filename=config)
+
+    print('get teams...')
+    scrape_teams(teams_ranking, data_folder)
+
+    print('get results...')
+    matches = scrape_results(dbw, tmp_folder, teams_ranking, f_matches, max_pages)
+
+    if len(matches) == 0:
+        print('No new matches available!')
+        return
+    
+    print('get matches...')
+    scrape_matches(matches, f_matches, data_folder, dbw, n_workers)
+
+    print('remove folder structure...')
     shutil.rmtree(tmp_folder)
 
     
