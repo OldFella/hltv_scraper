@@ -110,17 +110,28 @@ def scrape_results(dbw, tmp_folder, teams_ranking,f_matches ,max_pages):
 
     return matches
 
-def scrape_matches(matches, f_matches,data_folder, dbw, n_workers):
+def get_match_overview(matches,data_folder):
+    dates = pd.read_csv(f'{data_folder}matches.csv')
+    events = matches[['matchID', 'event']]
+    match_overview = dates[['matchID', 'date']].join(events.set_index('matchID'), on='matchID')
+    dates = dates.drop(columns=['date']).to_csv(f'{data_folder}matches.csv', index=False)
+    match_overview = match_overview[['matchID', 'event', 'date']].drop_duplicates()
+    match_overview.to_csv(f'{data_folder}match_overview.csv', index=False)
+
+
+
+def scrape_matches(matches, f_matches,data_folder, dbw, n_workers, tmp_folder):
     n_workers = min(n_workers, len(matches))
     new_data_flag = sm.main(n_workers = n_workers,f_matches = f_matches, result_path = data_folder)
     if new_data_flag:
+        get_match_overview(matches, data_folder)
 
         rearrange_data(dbw, data_folder)
 
-        tables = ['players', 'teams','player_stats', 'matches']
+        tables = ['match_overview','players', 'teams','player_stats', 'matches']
 
         for table in tables:
-            if table not in ['player_stats', 'matches']:
+            if table not in ['player_stats', 'matches', 'match_overview']:
                 df = remove_duplicates(f'{table}.csv', data_folder, dbw,table)
             else:
                 df = pd.read_csv(f'{data_folder}{table}.csv')
@@ -149,7 +160,8 @@ def main(n_workers, dir, config, max_pages = 1):
         return
     
     print('get matches...')
-    scrape_matches(matches, f_matches, data_folder, dbw, n_workers)
+    scrape_matches(matches, f_matches, data_folder, dbw, n_workers, tmp_folder)
+
 
     print('remove folder structure...')
     shutil.rmtree(tmp_folder)
@@ -162,7 +174,7 @@ if __name__ == '__main__':
     parser.add_argument('--n_workers','-n', type = int, default = 4)
     parser.add_argument('--dir', '-d', type = str, default = 'data/temp/')
     parser.add_argument('--config', '-c', type=str, default = 'database.ini')
-    parser.add_argument('--max_pages','-max', type = int, default = 5)
+    parser.add_argument('--max_pages','-max', type = int, default = 1)
 
     args = parser.parse_args()
 

@@ -4,6 +4,8 @@ select * from ( select  p.playerid,
                 from player_stats ps 
                 join teams t
                 on ps.teamid = t.teamid
+                join match_overview mo
+                on m.matchid = mo.matchid
                 full join players p
                 on ps.playerid = p.playerid
                 join (select distinct matchid,teamid, date from matches) m
@@ -15,7 +17,7 @@ select * from ( select  p.playerid,
                                 where pl.playerid in (select playerid from fantasies where fantasyid = {{fantasyid}}))
                     and ps.mapid = 0
                     and ps.sideid = 0 
-                    and m.date  between CAST('{{start_date}}' as date) - INTERVAL '{{months}} months'
+                    and mo.date  between CAST('{{start_date}}' as date) - INTERVAL '{{months}} months'
                                 and CAST('{{start_date}}' as date)
                     and m.teamid in (select teamid from fantasies where fantasyid = {{fantasyid}})
                 group by p.playerid) as stat

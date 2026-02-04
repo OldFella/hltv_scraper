@@ -8,6 +8,8 @@ select  ma.name as map,
                     on m.matchid = m2.matchid and m.teamid != m2.teamid
                 join teams t1
                     on m.teamid = t1.teamid
+                join match_overview mo
+                    on m.matchid = mo.matchid
                 join teams t2
                     on m2.teamid = t2.teamid
                 where   t1.teamid = {{teamid}} 
@@ -16,7 +18,7 @@ select  ma.name as map,
                         and m.mapid = m2.mapid 
                         and m.sideid = 0 
                         and m.mapid = {{mapid}} 
-                        and m.date between CAST('{{start_date}}' as date) 
+                        and mo.date between CAST('{{start_date}}' as date) 
                                             - INTERVAL '{{months}} months'
                         and CAST('{{start_date}}' as date)) as w
         join maps ma 

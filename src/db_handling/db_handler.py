@@ -57,7 +57,7 @@ class db_handler:
 class db_reader(db_handler):
     def __init__(self, filename = 'database.ini', section = 'postgresql', query_dir = 'queries/'):
         super().__init__(filename, section)
-        self.allowed_tables = ['matches', 'players', 'maps','sides', 'teams', 'player_stats', 'fantasies', 'fantasy_overview']
+        self.allowed_tables = ['matches', 'players', 'maps','sides', 'teams', 'player_stats', 'fantasies', 'fantasy_overview', 'match_overview']
         self.query_dir = query_dir
 
     def get_matchids(self):
@@ -90,7 +90,8 @@ class db_reader(db_handler):
         assert table in self.allowed_tables
         query = f"""SELECT column_name, data_type
                     FROM information_schema.columns
-                    WHERE table_name = '{table}'"""
+                    WHERE table_name = '{table}'
+                    ORDER BY ordinal_position"""
         cols = self.execute(query)
         cols = np.array(cols).T.squeeze()
         return cols
@@ -174,12 +175,17 @@ class db_writer(db_reader):
         assert table in self.allowed_tables
         table_cols = self.get_columns(table)
         col_names, col_dtypes = table_cols
+        print(col_names)
         df = df[col_names]
         integer_cols = col_names[col_dtypes == 'integer']
         df[integer_cols] = df[integer_cols].astype(int)
+
+        ids = self.get_ids(table, col_names[0])
+        df = df[~df[col_names[0]].isin(ids)]
         buffer = io.StringIO()
         df.to_csv(buffer, index = False, header = False)
         buffer.seek(0)
+        print(df)
         query = f'COPY {table} FROM STDIN WITH CSV'
         print('copy...')
         self.cur.copy_expert(query, buffer)
