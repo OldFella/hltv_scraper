@@ -5,7 +5,8 @@ select  m.matchid,
         m.score, 
         t2.name as opponent, 
         m2.score score_opponent, 
-        m.date
+        mo.date,
+        mo.event
 from matches m 
 join matches m2
     on m.matchid = m2.matchid and m.teamid != m2.teamid

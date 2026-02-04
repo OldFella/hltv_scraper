@@ -27,13 +27,18 @@ CREATE TABLE sides (
     name VARCHAR(255)
 );
 
+CREATE TABLE match_overview (
+    matchid INT PRIMARY KEY,
+    event VARCHAR(255),
+    date DATE
+);
+
 CREATE TABLE matches (
-    matchid INT,
+    matchid INT REFERENCES match_overview (matchid),
     teamid INT REFERENCES teams (teamid),
     mapid INT REFERENCES maps (mapid),
     sideid INT REFERENCES sides (sideid),
     score INT,
-    date DATE,
     PRIMARY KEY (matchid, teamid, mapid, sideid)
 );
 
