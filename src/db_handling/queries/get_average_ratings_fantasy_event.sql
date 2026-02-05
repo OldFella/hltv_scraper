@@ -5,10 +5,10 @@ select * from ( select  p.playerid,
                 join teams t
                 on ps.teamid = t.teamid
                 join match_overview mo
-                on m.matchid = mo.matchid
+                on ps.matchid = mo.matchid
                 full join players p
                 on ps.playerid = p.playerid
-                join (select distinct matchid,teamid, date from matches) m
+                join (select distinct matchid,teamid from matches) m
                 on ps.matchid = m.matchid and m.teamid != ps.teamid
                 where p.name in (select distinct pl.name 
                                 from player_stats pn

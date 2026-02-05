@@ -4,10 +4,10 @@ select p.name, avg(ps.rating) as avg_rating, count(ps.rating) as n_games
         on ps.teamid = t.teamid
     join players p
         on ps.playerid = p.playerid
-    join (select distinct matchid, date from matches) m
+    join (select distinct matchid from matches) m
         on m.matchid=ps.matchid
     join match_overview mo
-        on m.matchid = mo.matchid
+        on ps.matchid = mo.matchid
     where   p.playerid = {{playerid}} 
             and ps.sideid = {{sideid}} 
             and ps.mapid = {{mapid}}

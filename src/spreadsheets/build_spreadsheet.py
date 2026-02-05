@@ -56,7 +56,7 @@ def add_metrics(spreadsheet):
 
 def main(fantasyid, output):
 
-    dbr = db_reader(filename='../db_handling/database.ini', query_dir = '../db_handling/queries/')
+    dbr = db_reader(filename='../database.ini', query_dir = '../db_handling/queries/')
     fantasy = dbr.get_table('fantasies')
     fantasy = fantasy[fantasy['fantasyid'] == fantasyid]
     ratings = dbr.get_average_ratings_fantasy(fantasyid)
@@ -95,13 +95,14 @@ def main(fantasyid, output):
     player_h2h = spreadsheet.join(player_h2h.set_index('playerid'), on='playerid')
 
     
+    fantasy_name = dbr.get_name('fantasy_overview', 'fantasyid', fantasyid).item()
+    dir = f'{fantasy_name}/'
+
     spreadsheet = add_metrics(spreadsheet)
 
     sheets = [spreadsheet, team_h2h, player_h2h]
-    sheet_names = ['main', 'h2h_teams', 'h2h_players']    
+    sheet_names = [fantasy_name, 'Head to Head Teams', 'Head to Head Players']    
 
-    fantasy_name = dbr.get_name('fantasy_overview', 'fantasyid', fantasyid)
-    dir = f'{fantasy_name}/'
 
     os.mkdir(dir)
     dfs_tabs(sheets, sheet_names, f'{dir}{output}')

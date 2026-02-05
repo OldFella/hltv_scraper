@@ -3,13 +3,14 @@ select * from ( select  p.playerid,
                         count(ps.rating) as n_games
                 from player_stats ps 
                 join teams t
-                on ps.teamid = t.teamid
-                join match_overview mo
-                on mo.matchid = m.matchid
+                    on ps.teamid = t.teamid
                 full join players p
-                on ps.playerid = p.playerid
-                join (select distinct matchid,teamid, date from matches) m
-                on ps.matchid = m.matchid and m.teamid != ps.teamid
+                    on ps.playerid = p.playerid
+                join (select distinct matchid,teamid from matches) as m
+                    on  ps.matchid = m.matchid 
+                        and m.teamid != ps.teamid
+                join match_overview mo
+                    on mo.matchid = ps.matchid
                 where p.name in (select distinct pl.name 
                                 from player_stats pn
                                 join players pl 
