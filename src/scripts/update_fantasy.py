@@ -1,5 +1,7 @@
 import pandas as pd
 import argparse
+import sys
+sys.path.append('../')
 from db_handling.db_handler import db_writer
 
 
@@ -21,7 +23,7 @@ def rearrange_col(df,dbw, col):
     table = table.rename(columns={'name':index_col})
     df = df.join(table.set_index(index_col), on=index_col)
     df = df.dropna()
-    df.drop(columns = [index_col], axis =1, inplace =True)
+    df.drop(columns = [index_col], inplace =True)
     return df
 
 def split_fantasy(df):
@@ -29,7 +31,7 @@ def split_fantasy(df):
     df_overview = df_overview.rename(columns={'title':'name'})
     df_overview = df_overview.rename(str.lower, axis = 'columns')
     df_overview = df_overview.drop_duplicates()
-    df_fantasy = df[['fantasyID', 'teamid', 'playerid', 'cost']]
+    df_fantasy = df[['fantasyID', 'teamid', 'playerid','cost']]
     df_fantasy = df_fantasy.rename(str.lower, axis = 'columns')
 
     return df_overview, df_fantasy
@@ -37,6 +39,13 @@ def split_fantasy(df):
 def insert_table(df_overview, df_fantasy, dbw):
     dbw.insert(df_overview, 'fantasy_overview')
     dbw.insert(df_fantasy, 'fantasies')
+
+def missing_players(df, dbw):
+    players = df[['playerid', 'playername']]
+    players = players.rename(columns={'playername': 'name'})
+    db_playerids = dbw.get_ids('players', 'playerid')
+    players = players[~players['playerid'].isin(db_playerids)]
+    dbw.insert(players, 'players')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -50,6 +59,8 @@ if __name__ == '__main__':
     df = open_fantasy(args.input)
 
     df = rearrange_fantasy(df, dbw)
+
+    missing_players(df,dbw)
 
     df_overview, df_fantasy = split_fantasy(df)
 

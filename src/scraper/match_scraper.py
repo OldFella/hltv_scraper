@@ -104,7 +104,12 @@ class match_scraper(scraper_base):
     def get_maps(self, maps):
         pattern = r'id="[^"]*">([^"]*)</'
         map_match = re.findall(pattern, maps)
-        return map_match[0]
+
+        map_name = map_match[1]
+
+        if map_name == "All maps":
+            map_name = "All"
+        return map_name
     
     def get_player_stats(self,players):
 

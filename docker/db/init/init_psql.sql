@@ -79,16 +79,16 @@ CREATE TABLE fantasies (
 -- =========================
 INSERT INTO maps (mapid, name) VALUES 
     (0,'All'),
-    (1,'anb'),
-    (2,'ovp'),
-    (3,'anc'),
-    (4,'d2'),
-    (5,'nuke'),
-    (6,'mrg'),
-    (7,'inf'),
-    (8,'trn'),
-    (9,'tcn'),
-    (10,'cbl');
+    (1,'Anubis'),
+    (2,'Overpass'),
+    (3,'Ancient'),
+    (4,'Dust 2'),
+    (5,'Nuke'),
+    (6,'Mirage'),
+    (7,'Inferno'),
+    (8,'Train'),
+    (9,'Tuscan'),
+    (10,'Cobblestone');
 
 INSERT INTO sides (sideid, name) VALUES
     (0,'total'),

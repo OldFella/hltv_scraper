@@ -6,6 +6,7 @@ from tools.helpers import rating_to_points
 from db_handling.db_handler import db_reader
 import argparse
 import os
+import datetime
 
 
 def dfs_tabs(df_list, sheet_list, file_name):
@@ -43,23 +44,46 @@ def join_on(df, dfs, on):
 def add_metrics(spreadsheet):
     spreadsheet['avg_rating'] = spreadsheet['avg_rating'].astype('float')
     spreadsheet['avg_rating_event'] = spreadsheet['avg_rating_event'].astype('float')
+    spreadsheet['avg_rating_win'] = spreadsheet['avg_rating_win'].astype('float')
+    spreadsheet['avg_rating_lose'] = spreadsheet['avg_rating_lose'].astype('float')
+
 
     spreadsheet['rating/cost'] = 200 * spreadsheet['avg_rating']/spreadsheet['cost']
     spreadsheet['rating/cost'] = spreadsheet['rating/cost'].round(3)
     spreadsheet['avg_points'] = spreadsheet['avg_rating'].apply(lambda x: rating_to_points(x))
 
     spreadsheet['avg_points_event'] = spreadsheet['avg_rating_event'].apply(lambda x: rating_to_points(x))
+    spreadsheet['avg_points_win'] = spreadsheet['avg_rating_win'].apply(lambda x: rating_to_points(x))
+    spreadsheet['stddev_points_win'] = spreadsheet['stddev_rating_win'].apply(lambda x: rating_to_points(x + 1))
+
+    spreadsheet['avg_points_lose'] = spreadsheet['avg_rating_lose'].apply(lambda x: rating_to_points(x))
+    spreadsheet['stddev_points_lose'] = spreadsheet['stddev_rating_lose'].apply(lambda x: rating_to_points(x + 1))
+
+
     spreadsheet['avg_points/$'] = spreadsheet['avg_points']/spreadsheet['cost']
     spreadsheet['avg_points/$_event'] = spreadsheet['avg_points_event']/spreadsheet['cost']
     return spreadsheet
-    
+
+
+def get_average_rating_win_fantasy(fantasyid, win, dbr):
+    params = {'fantasyid':fantasyid,
+                  'start_date': datetime.date.today(),
+                  'months': 3,
+                  'win': win,
+                  'mapid':0}
+    _TEMPLATE = f'queries/get_average_ratings_win_fantasy.sql'
+    return dbr.query(_TEMPLATE, params)
+
 
 def main(fantasyid, output):
 
-    dbr = db_reader(filename='../database.ini', query_dir = '../db_handling/queries/')
+    dbr = db_reader(filename='../db_handling/database.ini', query_dir = '../db_handling/queries/')
     fantasy = dbr.get_table('fantasies')
     fantasy = fantasy[fantasy['fantasyid'] == fantasyid]
     ratings = dbr.get_average_ratings_fantasy(fantasyid)
+    ratings_win = get_average_rating_win_fantasy(fantasyid,1, dbr)
+    ratings_lose = get_average_rating_win_fantasy(fantasyid,0, dbr)
+
     fantasy_teams = fantasy['teamid'].drop_duplicates()
 
     player_h2h, team_h2h = get_h2h(fantasy_teams, fantasy, fantasyid, dbr)
@@ -85,14 +109,23 @@ def main(fantasyid, output):
     team_h2h = team_h2h.rename(columns = team_names)
     team_h2h = team_h2h.rename(index = team_names).reset_index()
     team_h2h = team_h2h.rename(columns={'teamid' : 'Team \ Opponent'})
+    ratings_lose = ratings_lose.rename(columns={'n_games': f'n_games_lose',
+                                            'avg_rating':f'avg_rating_lose',
+                                            'stddev_rating': 'stddev_rating_lose'})
+    ratings_win = ratings_win.rename(columns={'n_games': f'n_games_win',
+                                            'avg_rating':f'avg_rating_win',
+                                            'stddev_rating': 'stddev_rating_win'})
+
 
     cols = list(fantasy)
     cols[3], cols[-1] = cols[-1], cols[3]
     fantasy = fantasy.reindex(columns = cols)
-    spreadsheet = fantasy.join(ratings.set_index('playerid'), on='playerid')
+    # spreadsheet = fantasy.join(ratings.set_index('playerid'), on='playerid')
 
     spreadsheet = join_on(fantasy, [ratings, ratings_event], on='playerid')
-    player_h2h = spreadsheet.join(player_h2h.set_index('playerid'), on='playerid')
+    spreadsheet = join_on(spreadsheet, [ratings_win, ratings_lose],on = 'playerid')
+
+    player_h2h = fantasy.join(player_h2h.set_index('playerid'), on='playerid')
 
     
     fantasy_name = dbr.get_name('fantasy_overview', 'fantasyid', fantasyid).item()

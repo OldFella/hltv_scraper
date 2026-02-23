@@ -171,9 +171,9 @@ def main(n_workers, dir, config, max_pages = 1):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--n_workers','-n', type = int, default = 4)
+    parser.add_argument('--n_workers','-n', type = int, default = 1)
     parser.add_argument('--dir', '-d', type = str, default = 'data/temp/')
-    parser.add_argument('--config', '-c', type=str, default = 'database.ini')
+    parser.add_argument('--config', '-c', type=str, default = 'src/db_handling/database.ini')
     parser.add_argument('--max_pages','-max', type = int, default = 1)
 
     args = parser.parse_args()

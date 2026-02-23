@@ -7,11 +7,12 @@ import re
 
 class fantasy:
     
-    def run(self,file):
+    def run(self,file, title = None):
         soup = self.open_html(file)
         fantasy, id = self.find_fantasy(soup)
         teams = self.get_teams(fantasy)
-        title = self.get_title(soup)
+        if title is None:
+            title = self.get_title(soup)
         df = self.create_table(teams, id,title)
 
         return df
@@ -37,7 +38,7 @@ class fantasy:
         teams = fantasy.find_all('div', class_ = 'teamCon')
         result = {}
 
-        player_pattern = r'/stats/players/([0-9]*)/'
+        player_pattern = r'/stats/players/([0-9]*)/([^?]+)\?'
         for team in teams:
             header = team.find('div', class_ = 'teamHeader')
             name = header.find('div', class_ = 'teamName text-ellipsis').text
@@ -47,11 +48,11 @@ class fantasy:
             for player in players:
                 player_id = player.find('a', class_ = "player-stats-link")
                 player_id = player_id.get('href')
-                player_id = re.findall(player_pattern, player_id)[0]
+                player_id, player_name = re.findall(player_pattern, player_id)[0]
                 player_id = int(player_id)
 
                 player_cost = player.find('div', class_ = 'playerButtonText').text
-                team_content[player_id] = player_cost
+                team_content[player_id] = (player_cost, player_name)
             
             result[name] = team_content
         
@@ -66,12 +67,12 @@ class fantasy:
         
 
     def create_table(self,d,id,title):
-        df = pd.DataFrame(columns=['fantasyID','title','team', 'playerid', 'cost'])
+        df = pd.DataFrame(columns=['fantasyID','title','team', 'playerid','playername' ,'cost'])
         for name, team_content in d.items():
-            for player, cost in team_content.items():
+            for player, (cost, playername) in team_content.items():
                 cost = cost.replace("$",'')
                 cost = cost.replace(',000', '')
-                df.loc[len(df)] = [id, title,name ,player, int(cost)]
+                df.loc[len(df)] = [id, title,name ,player,playername ,int(cost)]
         return df
 
 
@@ -82,10 +83,12 @@ if __name__ == '__main__':
 
     parser.add_argument('--input','-i', type = str, default = '../data/fantasy_html/fantasy.html')
     parser.add_argument('--output','-o', type = str, default = 'fantasy.csv')
+    parser.add_argument('--title','-t', type = str, default = None)
+
     args = parser.parse_args()
 
     
-    df = fantasy().run(args.input)
+    df = fantasy().run(args.input, args.title)
     output_path = args.input.split('/')
     output_path = output_path[:-1]
     output_path = '/'.join(output_path)

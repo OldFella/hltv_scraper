@@ -75,7 +75,7 @@ class db_reader(db_handler):
     def get_name(self, table, idname, id):
         query = f"SELECT name FROM {table} WHERE {idname} = {id}"
         name = self.execute(query)
-        name = np.array(name).T.flatten()
+        name = np.array(name).T.squeeze()
         return name
     
     def get_table(self, table):
