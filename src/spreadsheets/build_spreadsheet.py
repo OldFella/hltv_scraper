@@ -7,6 +7,7 @@ from db_handling.db_handler import db_reader
 import argparse
 import os
 import datetime
+import datetime
 
 
 def dfs_tabs(df_list, sheet_list, file_name):
@@ -47,6 +48,9 @@ def add_metrics(spreadsheet):
     spreadsheet['avg_rating_win'] = spreadsheet['avg_rating_win'].astype('float')
     spreadsheet['avg_rating_lose'] = spreadsheet['avg_rating_lose'].astype('float')
 
+    spreadsheet['avg_rating_win'] = spreadsheet['avg_rating_win'].astype('float')
+    spreadsheet['avg_rating_lose'] = spreadsheet['avg_rating_lose'].astype('float')
+
 
     spreadsheet['rating/cost'] = 200 * spreadsheet['avg_rating']/spreadsheet['cost']
     spreadsheet['rating/cost'] = spreadsheet['rating/cost'].round(3)
@@ -65,6 +69,17 @@ def add_metrics(spreadsheet):
     return spreadsheet
 
 
+
+def get_average_rating_win_fantasy(fantasyid, win, dbr):
+    params = {'fantasyid':fantasyid,
+                  'start_date': datetime.date.today(),
+                  'months': 3,
+                  'win': win,
+                  'mapid':0}
+    _TEMPLATE = f'queries/get_average_ratings_win_fantasy.sql'
+    return dbr.query(_TEMPLATE, params)
+
+
 def get_average_rating_win_fantasy(fantasyid, win, dbr):
     params = {'fantasyid':fantasyid,
                   'start_date': datetime.date.today(),
@@ -81,6 +96,9 @@ def main(fantasyid, output):
     fantasy = dbr.get_table('fantasies')
     fantasy = fantasy[fantasy['fantasyid'] == fantasyid]
     ratings = dbr.get_average_ratings_fantasy(fantasyid)
+    ratings_win = get_average_rating_win_fantasy(fantasyid,1, dbr)
+    ratings_lose = get_average_rating_win_fantasy(fantasyid,0, dbr)
+
     ratings_win = get_average_rating_win_fantasy(fantasyid,1, dbr)
     ratings_lose = get_average_rating_win_fantasy(fantasyid,0, dbr)
 
@@ -120,6 +138,7 @@ def main(fantasyid, output):
     cols = list(fantasy)
     cols[3], cols[-1] = cols[-1], cols[3]
     fantasy = fantasy.reindex(columns = cols)
+    # spreadsheet = fantasy.join(ratings.set_index('playerid'), on='playerid')
     # spreadsheet = fantasy.join(ratings.set_index('playerid'), on='playerid')
 
     spreadsheet = join_on(fantasy, [ratings, ratings_event], on='playerid')
